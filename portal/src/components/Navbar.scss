@@ -1,0 +1,28 @@
+.Navbar {
+
+  height: 50px;
+  display: block;
+  width: 100%;
+  background-color: #D8D8D8;
+}
+
+.logo-area {
+  display: flex;
+  flex-direction: row;
+  background-color: #C3C3C3;
+  width: 200px;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    height: 30px;
+    margin-right: 10px;
+  }
+
+  .title {
+    font-size: 18px;
+    color: #565656;
+    font-weight: 200;
+  }
+}

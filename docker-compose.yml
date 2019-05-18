@@ -1,0 +1,12 @@
+version: "2"
+services:
+  resale-global-portal:
+    container_name: portal
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: resale_global_portal
+    stdin_open: true
+    tty: true
+    ports:
+      - "8080:8080"
