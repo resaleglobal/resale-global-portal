@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux'
+
 import Navbar from './components/navbar/Navbar'
-import {Route} from 'react-router-dom'
+import {Route, Redirect} from 'react-router-dom'
 
 import './App.scss';
 import Content from './components/content/Content';
@@ -10,36 +12,44 @@ import { consignorLinks } from './pages/consignor/Consignor';
 import { buyerLinks } from './pages/buyer/Buyer';
 
 class App extends Component {
+
+  state = {}
+
+
   render() {
     return (
         <div className="App">
-          <Navbar />
+          <Navbar {...this.props} />
           <div className="body">
             <Route path="/app/admin"
-              links={adminLinks}
               render={(routeProps) => (
-                <Content {...routeProps} links={adminLinks} />
+                this.props.user.isAdmin ? 
+                (<Content {...routeProps} links={adminLinks} />)
+                : (<Redirect to="/app" />)
               )}
             />
 
             <Route path="/app/reseller"
-              links={adminLinks}
               render={(routeProps) => (
-                <Content {...routeProps} links={resellerLinks} />
+                this.props.user.isReseller ? 
+                (<Content {...routeProps} links={resellerLinks} />)
+                : (<Redirect to="/app" />)
               )}
             />
 
             <Route path="/app/consignor"
-              links={adminLinks}
               render={(routeProps) => (
-                <Content {...routeProps} links={consignorLinks} />
+                this.props.user.isConsignor ? 
+                (<Content {...routeProps} links={consignorLinks} />)
+                : (<Redirect to="/app" />)
               )}
             />
 
             <Route path="/app/buyer"
-              links={adminLinks}
               render={(routeProps) => (
-                <Content {...routeProps} links={buyerLinks} />
+                this.props.user.isBuyer ? 
+                (<Content {...routeProps} links={buyerLinks} />)
+                : (<Redirect to="/app" />)
               )}
             />
           </div>
@@ -48,4 +58,10 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+  user: state.user,
+})
+
+export default connect(
+  mapStateToProps
+)(App)

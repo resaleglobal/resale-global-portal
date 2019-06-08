@@ -15,10 +15,10 @@ class Navbar extends Component {
           </div>
         </div>
         <div className="links">
-          <NavLink activeClassName="active-link" to="/app/admin">Admin</NavLink>
-          <NavLink activeClassName="active-link" to="/app/reseller">Reseller</NavLink>
-          <NavLink activeClassName="active-link" to="/app/consignor">Consignor</NavLink>
-          <NavLink activeClassName="active-link" to="/app/buyer">Buyer</NavLink>
+          { this.props.user.isAdmin ? (<NavLink activeClassName="active-link" to="/app/admin">Admin</NavLink>) : (<></>) }
+          { this.props.user.isReseller ? (<NavLink activeClassName="active-link" to="/app/reseller">Reseller</NavLink>) : (<></>) }
+          { this.props.user.isConsignor ? (<NavLink activeClassName="active-link" to="/app/consignor">Consignor</NavLink>) : (<></>) }
+          { this.props.user.isBuyer ? (<NavLink activeClassName="active-link" to="/app/buyer">Buyer</NavLink>) : (<></>) }
         </div>
       </nav>
     );
