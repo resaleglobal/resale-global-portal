@@ -9,21 +9,6 @@ import { resellerLinks } from './pages/reseller/Reseller';
 import { consignorLinks } from './pages/consignor/Consignor';
 import { buyerLinks } from './pages/buyer/Buyer';
 
-let userTypes = [
-  'admin',
-  'reseller',
-  'consignor',
-  'buyer'
-]
-
-let userData = {
-  isAdmin: true,
-  isReseller: true,
-  isConsignor: true,
-  isBuyer: true,
-  organization: ''
-}
-
 class App extends Component {
   render() {
     return (

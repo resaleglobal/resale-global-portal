@@ -3,23 +3,18 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom'
+import {BrowserRouter as Router, Route} from 'react-router-dom'
+import store from "./store/store";
 import Login from './pages/login/Login'
-
-
-let userData = {
-  isAdmin: true,
-  isReseller: true,
-  isConsignor: true,
-  isBuyer: true,
-  organization: ''
-}
+import { Provider } from "react-redux";
 
 const routing = (
-  <Router>
+  <Provider store={store}>
+    <Router>
       <Route path="/app" component={App} />
       <Route exact path="/login" component={Login} />
-  </Router>
+    </Router>
+  </Provider>
 )
 
 ReactDOM.render(routing, document.getElementById('root'));

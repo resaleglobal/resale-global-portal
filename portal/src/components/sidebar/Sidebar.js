@@ -10,7 +10,7 @@ class Sidebar extends Component {
       <div className="sidebar-container">
         {this.props.links.map(
           (link) => {
-            return <NavLink to={link.url} activeClassName="active-link">{link.name}</NavLink>
+            return <NavLink key={link.url} to={link.url} activeClassName="active-link">{link.name}</NavLink>
           }
         )}
       </div>
