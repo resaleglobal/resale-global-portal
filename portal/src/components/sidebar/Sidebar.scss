@@ -1,0 +1,32 @@
+
+
+.sidebar-container {
+  width: 200px;
+  min-width: 200px;
+  height: calc(100vh - 50px);
+  background-color:#F1F1F1;
+  margin-top: 10px;
+
+  display:flex;
+  flex-direction: column;
+
+  a {
+    display: flex;
+    height: 35px;
+    align-items: center;
+    width: 100%;
+    padding-left: 20px;
+
+    font-weight: bold;
+    font-size: 14px;
+    color: #565656;
+    letter-spacing: 0.5px;
+    text-transform: capitalize;
+
+    &.active-link {
+      background-color: #dedede;
+    }
+
+  }
+  
+}

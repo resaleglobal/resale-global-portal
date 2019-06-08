@@ -3,15 +3,22 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import Navbar from './components/Navbar'
-import {BrowserRouter as Router, Route} from 'react-router-dom'
+import {BrowserRouter as Router, Route, Redirect} from 'react-router-dom'
+import Login from './pages/login/Login'
+
+
+let userData = {
+  isAdmin: true,
+  isReseller: true,
+  isConsignor: true,
+  isBuyer: true,
+  organization: ''
+}
 
 const routing = (
   <Router>
-    <div>
-      <Navbar />
-      <Route path="/" component={App} />
-    </div>
+      <Route path="/app" component={App} />
+      <Route exact path="/login" component={Login} />
   </Router>
 )
 
