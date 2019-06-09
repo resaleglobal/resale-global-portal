@@ -5,14 +5,12 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {BrowserRouter as Router, Route} from 'react-router-dom'
 import store from "./store/store";
-import Login from './pages/login/Login'
 import { Provider } from "react-redux";
 
 const routing = (
   <Provider store={store}>
     <Router>
-      <Route path="/app" component={App} />
-      <Route exact path="/login" component={Login} />
+      <Route path="/" component={App} />
     </Router>
   </Provider>
 )
