@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux'
 import "./Login.scss"
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import InputLabel from '@material-ui/core/InputLabel';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
+import { submitLogin } from '../../store/authorization/AuthActions';
 
 
 
@@ -47,11 +49,14 @@ class Login extends Component {
     }
 
     if (pass) {
-      console.log('Submitting!!!')
+      this.props.submitLogin({
+        email: this.state.email,
+        password: this.state.password
+      })
     }
   }
 
-  handleChange = (event, key) => {
+  handleChange = (key) => (event) => {
     let errorKey = `${key}Error`
     this.setState({
       [key]: event.target.value,
@@ -83,7 +88,7 @@ class Login extends Component {
                 autoFocus={true}
                 type="email" 
                 value={this.state.email}
-                onChange={(e) => this.handleChange(e, 'email')}>
+                onChange={this.handleChange('email')}>
               </OutlinedInput>
             </FormControl>
             <FormControl fullWidth={true} required={true} variant="outlined" error={this.state.passwordError}>
@@ -93,7 +98,7 @@ class Login extends Component {
                 labelWidth={80}
                 type="password"
                 value={this.state.password}
-                onChange={(e) => this.handleChange(e, 'password')}>
+                onChange={this.handleChange('password')}>
               </OutlinedInput>
             </FormControl>
             <Button fullWidth={true} color='primary' variant='outlined' onClick={this.handleSubmit}>Submit</Button>
@@ -104,4 +109,11 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    submitLogin: (loginParam) => dispatch(submitLogin(loginParam))
+  }
+}
+
+
+export default connect(null, mapDispatchToProps)(Login);
