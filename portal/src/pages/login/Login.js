@@ -6,6 +6,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import { submitLogin } from '../../store/authorization/AuthActions';
+import {Redirect} from 'react-router-dom'
 
 
 
@@ -65,7 +66,12 @@ class Login extends Component {
   }
 
   render() {
-    
+    const {loading, token} = this.props
+
+    if (token) {
+      return (<Redirect to="/app" />);
+    }
+
     return (
       <div className="login">
         <div className="login-box">
@@ -88,7 +94,8 @@ class Login extends Component {
                 autoFocus={true}
                 type="email" 
                 value={this.state.email}
-                onChange={this.handleChange('email')}>
+                onChange={this.handleChange('email')}
+                disabled={loading}>
               </OutlinedInput>
             </FormControl>
             <FormControl fullWidth={true} required={true} variant="outlined" error={this.state.passwordError}>
@@ -98,10 +105,11 @@ class Login extends Component {
                 labelWidth={80}
                 type="password"
                 value={this.state.password}
-                onChange={this.handleChange('password')}>
+                onChange={this.handleChange('password')}
+                disabled={loading}>
               </OutlinedInput>
             </FormControl>
-            <Button fullWidth={true} color='primary' variant='outlined' onClick={this.handleSubmit}>Submit</Button>
+            <Button fullWidth={true} color='primary' variant='outlined' onClick={this.handleSubmit}>{loading ? 'Loading' : 'Submit'}</Button>
           </div>
         </div>
       </div>
@@ -115,5 +123,10 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
+const mapStateToProps = (state) => ({
+  loading: state.auth.loginLoading,
+  token: state.auth.token
+})
 
-export default connect(null, mapDispatchToProps)(Login);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
