@@ -4,6 +4,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import reducers from './reducers';
 import createSagaMiddleware from 'redux-saga'
 import { loginSaga } from "./authorization/AuthLoginSaga";
+import { userSaga } from "./user/UserSaga";
 
 // create the saga middleware
 const sagaMiddleware = createSagaMiddleware()
@@ -15,5 +16,6 @@ const store = createStore(reducers,
   composeWithDevTools(applyMiddleware(...middlewares)));
 
 sagaMiddleware.run(loginSaga)
+sagaMiddleware.run(userSaga)
 
-export default store;
+export default store; 

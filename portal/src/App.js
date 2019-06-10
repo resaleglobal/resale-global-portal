@@ -11,6 +11,7 @@ import { resellerLinks } from './pages/reseller/Reseller';
 import { consignorLinks } from './pages/consignor/Consignor';
 import { buyerLinks } from './pages/buyer/Buyer';
 import Login from './pages/login/Login'
+import { fetchUser } from './store/user/UserActions'
 
 
 class App extends Component {
@@ -28,23 +29,17 @@ class App extends Component {
 class AuthAppBody extends Component {
 
   getUser = () => {
-    console.log('Getting User!!!')
+    this.props.fetchUser()
   }
 
   render() {
     return (
       <>
       {
-        this.props.isAuthenticated ?
-        (<AppBody />) :
-        this.props.auth.token !== null ?
-          (
-            <>
-              {this.getUser()}
-              loading!!!!
-            </> 
-          ) :
-          (<Redirect to="/login" />)
+        this.props.user.userLoaded ? (<AppBody { ...this.props} />) :
+          this.props.auth.token !== null ?
+            (this.props.user.loadingUser ? 'loading!!!!' : this.getUser()) :
+            (<Redirect to="/login" />)
       }
       </>
     )
@@ -64,7 +59,6 @@ class AppBody extends Component {
               : (<Redirect to="/app" />)
             )}
           />
-  
           <Route path="/app/reseller"
             render={(routeProps) => (
               this.props.user.isReseller ? 
@@ -72,7 +66,6 @@ class AppBody extends Component {
               : (<Redirect to="/app" />)
             )}
           />
-  
           <Route path="/app/consignor"
             render={(routeProps) => (
               this.props.user.isConsignor ? 
@@ -80,7 +73,6 @@ class AppBody extends Component {
               : (<Redirect to="/app" />)
             )}
           />
-  
           <Route path="/app/buyer"
             render={(routeProps) => (
               this.props.user.isBuyer ? 
@@ -99,6 +91,12 @@ const mapStateToProps = (state) => ({
   auth: state.auth
 })
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchUser: () => dispatch(fetchUser())
+  }
+}
+
 export default connect(
-  mapStateToProps
+  mapStateToProps, mapDispatchToProps
 )(App)

@@ -1,5 +1,4 @@
 export const initialAuthState = {
-  isAuthenticated: false,
   token: localStorage.getItem('auth-token'),
   loginLoading: false,
   loginError: false,
@@ -8,7 +7,6 @@ export const initialAuthState = {
 
 
 export default (state = initialAuthState, action) => {
-  console.log('action')
   switch (action.type) {
     case "SUBMIT_LOGIN":
       return {
@@ -20,7 +18,6 @@ export default (state = initialAuthState, action) => {
     case "LOGIN_SUCCESS":
       return {
         ...state,
-        isAuthenticated: true,
         token: action.payload.token,
         loginLoading: false
       }
