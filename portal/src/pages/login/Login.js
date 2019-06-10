@@ -8,8 +8,7 @@ import FormControl from '@material-ui/core/FormControl';
 import { submitLogin } from '../../store/authorization/AuthActions';
 import {Redirect} from 'react-router-dom'
 
-
-
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 class Login extends Component {
@@ -24,6 +23,7 @@ class Login extends Component {
       emailError: false
     };
   }
+
 
   handleSubmit = () => {
     this.setState({
@@ -66,7 +66,7 @@ class Login extends Component {
   }
 
   render() {
-    const {loading, token} = this.props
+    const {loading, token, hasError, error} = this.props
 
     if (token) {
       return (<Redirect to="/app" />);
@@ -86,6 +86,7 @@ class Login extends Component {
             <div className="box-body-title">
               Login
             </div>
+            { hasError ? (<div className="login-error">{error}</div>) : null }
             <FormControl fullWidth={true} required={true} variant="outlined" error={this.state.emailError}>
               <InputLabel htmlFor="email" >Email</InputLabel>
               <OutlinedInput
@@ -109,7 +110,13 @@ class Login extends Component {
                 disabled={loading}>
               </OutlinedInput>
             </FormControl>
-            <Button fullWidth={true} color='primary' variant='outlined' onClick={this.handleSubmit}>{loading ? 'Loading' : 'Submit'}</Button>
+            <Button
+              fullWidth={true}
+              color='primary'
+              variant='outlined'
+              onClick={this.handleSubmit}
+              disabled={loading}>{loading ? <CircularProgress className="login-loader" />: 'Submit'}
+            </Button>
           </div>
         </div>
       </div>
@@ -125,7 +132,9 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => ({
   loading: state.auth.loginLoading,
-  token: state.auth.token
+  token: state.auth.token,
+  hasError: state.auth.loginError,
+  error: state.auth.loginErrorMessage
 })
 
 
