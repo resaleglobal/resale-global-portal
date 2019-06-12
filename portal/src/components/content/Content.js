@@ -3,6 +3,8 @@ import Sidebar from '../../components/sidebar/Sidebar';
 import Body from '../../components/body/Body';
 
 import {Route, Redirect} from 'react-router-dom'
+import AdminUsersPage from '../../pages/admin/users/AdminUsersPage';
+import BuyerHistoryPage from '../../pages/buyer/history/BuyerHistoryPage';
 
 
 
@@ -14,7 +16,7 @@ class Content extends Component {
     return (
       <>
         <Sidebar links={this.props.links}/>
-        <Body>
+        <Body {...this.props}>
           {/* Redirects for parent routes */}
           <Route exact path="/app/admin" render={() => (<Redirect to="/app/admin/dashboard"/>)}/>
           <Route exact path="/app/reseller" render={() => (<Redirect to="/app/reseller/dashboard"/>)}/>
@@ -22,6 +24,7 @@ class Content extends Component {
           <Route exact path="/app/buyer" render={() => (<Redirect to="/app/buyer/history"/>)}/>
 
           {/* Routes for admin */}
+          <Route exact path="/app/admin/users" component={AdminUsersPage}/>
 
 
           {/* Routes for reseller */}
@@ -31,7 +34,7 @@ class Content extends Component {
 
 
           {/* Routes for buyer */}
-
+          <Route exact path="/app/buyer/history" component={BuyerHistoryPage}/>
 
         </Body>
       </>

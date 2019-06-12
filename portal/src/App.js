@@ -13,6 +13,9 @@ import { buyerLinks } from './pages/buyer/Buyer';
 import Login from './pages/login/Login'
 import { fetchUser } from './store/user/UserActions'
 
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+
 
 class App extends Component {
 
@@ -38,10 +41,20 @@ class AuthAppBody extends Component {
       {
         this.props.user.userLoaded ? (<AppBody { ...this.props} />) :
           this.props.auth.token !== null ?
-            (this.props.user.loadingUser ? 'loading!!!!' : this.getUser()) :
+            (this.props.user.loadingUser ? <AppLoader /> : this.getUser()) :
             (<Redirect to="/login" />)
       }
       </>
+    )
+  }
+}
+
+class AppLoader extends Component {
+  render() {
+    return (
+      <div className='app-loader'>
+        <CircularProgress className="loader" />
+      </div>
     )
   }
 }

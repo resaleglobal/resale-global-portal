@@ -20,3 +20,10 @@ export const loginError = (error) => {
     payload: { error }
   }
 }
+
+export const submitLogout = (loginParams) => {
+  return {
+    type: "SUBMIT_LOGOUT",
+    payload: { params: loginParams }
+  }
+}
