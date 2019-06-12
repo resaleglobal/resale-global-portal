@@ -12,8 +12,8 @@ import TableRow from '@material-ui/core/TableRow';
 class AdminUsersPage extends Component {
 
   rows = [
-    {name: 'Kevyn Hale', email: 'kevyn@kevynhale.com', number: '8019004621', permissions: ['Admin', 'Reseller'], profile: ' '},
-    {name: 'Kevyn Hale', email: 'kevyn@kevynhale.com', number: '8019004621', permissions: ['Reseller'], profile: 'http://www.sardiniauniqueproperties.com/wp-content/uploads/2015/10/square-profile-pic-2.jpg'}
+    {id: '1', name: 'Kevyn Hale', email: 'kevyn@kevynhale.com', number: '8019004621', permissions: ['Admin', 'Reseller'], profile: 'http://www.sardiniauniqueproperties.com/wp-content/uploads/2015/10/square-profile-pic-2.jpg'},
+    {id: '2', name: 'Kevyn Hale', email: 'kevyn@kevynhale.com', number: '8019004621', permissions: ['Reseller'], profile: 'http://www.sardiniauniqueproperties.com/wp-content/uploads/2015/10/square-profile-pic-2.jpg'}
   ]
 
   render() {
@@ -30,12 +30,12 @@ class AdminUsersPage extends Component {
       </TableHead>
       <TableBody>
         {this.rows.map(row => (
-          <TableRow key={row.name}>
+          <TableRow key={row.id}>
             <TableCell align="center" className="table-profile"><img src={row.profile} alt="profile"></img></TableCell>
             <TableCell>{row.name}</TableCell>
             <TableCell>{row.email}</TableCell>
             <TableCell>{row.number}</TableCell>
-            <TableCell><div className="permissions">{row.permissions.map( p => (<div>{p}</div>))}</div></TableCell>
+            <TableCell><div className="permissions">{row.permissions.map( p => (<div key={p}>{p}</div>))}</div></TableCell>
           </TableRow>
         ))}
       </TableBody>

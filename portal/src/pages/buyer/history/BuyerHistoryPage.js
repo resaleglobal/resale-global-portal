@@ -13,10 +13,10 @@ class BuyerHistoryPage extends Component {
 
   rows = [
     {id: '1', date: '01/13/2014', cost: "$50.13", item: 'The Awesome Jacket'},
-    {id: '1', date: '04/07/2014', cost: "$100.13", item: 'The Awesome Jacket'},
-    {id: '1', date: '01/13/2014', cost: "$12.13", item: 'The Awesome Jacket'},
-    {id: '1', date: '12/01/2016', cost: "$5000.13", item: 'The Awesome Jacket'},
-    {id: '1', date: '01/13/2014', cost: "$122.13", item: 'The Awesome Jacket'}
+    {id: '2', date: '04/07/2014', cost: "$100.13", item: 'The Awesome Jacket'},
+    {id: '3', date: '01/13/2014', cost: "$12.13", item: 'The Awesome Jacket'},
+    {id: '4', date: '12/01/2016', cost: "$5000.13", item: 'The Awesome Jacket'},
+    {id: '5', date: '01/13/2014', cost: "$122.13", item: 'The Awesome Jacket'}
   ]
 
   render() {

@@ -35,7 +35,10 @@ export default (state = initialAuthState, action) => {
     case "SUBMIT_LOGOUT":
       localStorage.removeItem(AUTH_TOKEN)
 
-      return initialAuthState
+      return {
+        ...initialAuthState,
+        token: null
+      }
 
     default:
       return state
