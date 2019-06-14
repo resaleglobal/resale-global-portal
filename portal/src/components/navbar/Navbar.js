@@ -13,6 +13,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import { showReseller, showConsignor, showAdmin, showBuyer } from '../../store/accounts/UserAccountsSelectors';
 
 
 
@@ -70,6 +71,11 @@ class Navbar extends Component {
   }
 
   render() {
+    let profile = this.props.user.profile
+    if (!profile) {
+      profile = 'http://torrentcorp.com/wp-content/uploads/Generic-profile-pic-1.gif'
+    }
+
     return (
       <nav className="Navbar">
         <div className="logo-area">
@@ -79,13 +85,13 @@ class Navbar extends Component {
           </div>
         </div>
         <div className="links">
-          { this.props.user.isAdmin ? (<NavLink activeClassName="active-link" to="/app/admin">Admin</NavLink>) : (<></>) }
-          { this.props.user.isReseller ? (<NavLink activeClassName="active-link" to="/app/reseller">Reseller</NavLink>) : (<></>) }
-          { this.props.user.isConsignor ? (<NavLink activeClassName="active-link" to="/app/consignor">Consignor</NavLink>) : (<></>) }
-          { this.props.user.isBuyer ? (<NavLink activeClassName="active-link" to="/app/buyer">Buyer</NavLink>) : (<></>) }
+          { this.props.showAdmin ? (<NavLink activeClassName="active-link" to="/app/admin">Admin</NavLink>) : (<></>) }
+          { this.props.showReseller ? (<NavLink activeClassName="active-link" to="/app/reseller">Reseller</NavLink>) : (<></>) }
+          { this.props.showConsignor ? (<NavLink activeClassName="active-link" to="/app/consignor">Consignor</NavLink>) : (<></>) }
+          { this.props.showBuyer ? (<NavLink activeClassName="active-link" to="/app/buyer">Buyer</NavLink>) : (<></>) }
         </div>
         <Button className="profile" aria-controls="user-menu" onClick={this.handleAccountClick}  aria-haspopup="true">
-          <img src={this.props.user.profile} alt="user profile"></img>
+          <img src={profile} alt="user profile"></img>
         </Button>
         <StyledMenu id='user-menu' anchorEl={this.state.anchorEl} keepMounted open={Boolean(this.state.anchorEl)} onClose={this.handleClose}>
           <MenuItem onClick={this.handleClose}>
@@ -112,4 +118,13 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(Navbar);
+const mapStateToProps = (state) => {
+  return {
+    showAdmin: showAdmin(state),
+    showConsignor: showConsignor(state),
+    showResller: showReseller(state),
+    showBuyer: showBuyer(state)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

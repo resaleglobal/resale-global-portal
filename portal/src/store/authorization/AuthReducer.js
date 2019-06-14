@@ -1,4 +1,4 @@
-const AUTH_TOKEN = 'auth-token'
+export const AUTH_TOKEN = 'auth-token'
 
 export const initialAuthState = {
   token: localStorage.getItem(AUTH_TOKEN),
@@ -31,13 +31,6 @@ export default (state = initialAuthState, action) => {
         loginError: true,
         loginErrorMessage: action.payload.error,
         loginLoading: false,
-      }
-    case "SUBMIT_LOGOUT":
-      localStorage.removeItem(AUTH_TOKEN)
-
-      return {
-        ...initialAuthState,
-        token: null
       }
 
     default:

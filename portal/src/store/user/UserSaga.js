@@ -26,8 +26,13 @@ const getUser = () => {
 
 function* fetchUser(action) {
   try {
-     const data = yield call(getUser)
-     yield put(fetchUserSuccess(data));
+    const data = yield call(getUser)
+
+    if (data.resellers.length > 0) {
+      
+    }
+
+    yield put(fetchUserSuccess(data));
   } catch (e) {
     yield put(fetchUserError(e));
   }

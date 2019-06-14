@@ -15,6 +15,8 @@ import { fetchUser } from './store/user/UserActions'
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+import { isNewAccount, showAdmin, showBuyer, showConsignor, showReseller } from './store/accounts/UserAccountsSelectors';
+
 
 
 class App extends Component {
@@ -39,6 +41,8 @@ class AuthAppBody extends Component {
     return (
       <>
       {
+        // TODO: What to do when the user request has an error?
+        this.props.user.hasError ? (<AppBody { ...this.props} />) :
         this.props.user.userLoaded ? (<AppBody { ...this.props} />) :
           this.props.auth.token !== null ?
             (this.props.user.loadingUser ? <AppLoader /> : this.getUser()) :
@@ -67,28 +71,28 @@ class AppBody extends Component {
         <div className="body">
           <Route path="/app/admin"
             render={(routeProps) => (
-              this.props.user.isAdmin ? 
+              this.props.showAdmin? 
               (<Content {...routeProps} links={adminLinks} />)
               : (<Redirect to="/app" />)
             )}
           />
           <Route path="/app/reseller"
             render={(routeProps) => (
-              this.props.user.isReseller ? 
+              this.props.showReseller ? 
               (<Content {...routeProps} links={resellerLinks} />)
               : (<Redirect to="/app" />)
             )}
           />
           <Route path="/app/consignor"
             render={(routeProps) => (
-              this.props.user.isConsignor ? 
+              this.props.showConsignor ? 
               (<Content {...routeProps} links={consignorLinks} />)
               : (<Redirect to="/app" />)
             )}
           />
           <Route path="/app/buyer"
             render={(routeProps) => (
-              this.props.user.isBuyer ? 
+              this.props.showBuyer ? 
               (<Content {...routeProps} links={buyerLinks} />)
               : (<Redirect to="/app" />)
             )}
@@ -101,7 +105,12 @@ class AppBody extends Component {
 
 const mapStateToProps = (state) => ({
   user: state.user,
-  auth: state.auth
+  auth: state.auth,
+  isNewAccount: isNewAccount(state),
+  showAdmin: showAdmin(state),
+  showConsignor: showConsignor(state),
+  showResller: showReseller(state),
+  showBuyer: showBuyer(state)
 })
 
 const mapDispatchToProps = (dispatch) => {
