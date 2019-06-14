@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from 'redux-saga/effects'
 import { fetchUserError, fetchUserSuccess } from './UserActions'
-import store from './../store';
+import { get } from './../../utils/RestUtils'
 
 //const delayReject = time => new Promise((_, reject) => setTimeout(() => { 
 //  reject(new Error('You provided invalid creds.'))
@@ -10,19 +10,7 @@ import store from './../store';
 
 const getUser = () => {
 
-  const token = store.getState().auth.token
-
-  return fetch("http://localhost:8000/account/v1/user", {
-    method: 'GET',
-    mode: 'cors',
-    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: 'same-origin', // include, *same-origin, omit
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    },
-  }).then(response => {
-    console.log(response)
+  return get("/account/v1/user").then(response => {
     if (!response.ok) {
       switch(response.status) {
         case 401:
