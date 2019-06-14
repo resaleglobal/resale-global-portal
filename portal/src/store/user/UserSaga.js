@@ -10,7 +10,7 @@ import { get } from './../../utils/RestUtils'
 
 const getUser = () => {
 
-  return get("/account/v1/user")
+  return get("/account/v1/uer")
     .then(response => {
       if (!response.ok) {
         switch(response.status) {

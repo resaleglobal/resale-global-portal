@@ -17,6 +17,11 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { isNewAccount, showAdmin, showBuyer, showConsignor, showReseller } from './store/accounts/UserAccountsSelectors';
 
+import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
+
+import { submitLogout } from './store/authorization/AuthActions'
+
+
 
 
 class App extends Component {
@@ -80,9 +85,19 @@ class AppPageSection extends Component {
 }
 
 class AppUserError extends Component {
+
+  submitLogout = () => {
+   this.props.submitLogout()
+  }
+
   render() {
     return (
-      <div>Error loading user!</div>
+      <div className="error-container">
+        <ErrorOutlineIcon className="error-icon"/>
+        <div className="error-message">
+          There was an error loading your user data. Try refreshing the page. If the error persists, <span onClick={this.submitLogout} className="link">click here to logout</span> and then log back in. If the issue persists, contact the administrator at admin@resaleglobal.com.
+        </div>
+      </div>
     )
   }
 }
@@ -144,7 +159,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchUser: () => dispatch(fetchUser())
+    fetchUser: () => dispatch(fetchUser()),
+    submitLogout: () => dispatch(submitLogout())
   }
 }
 
