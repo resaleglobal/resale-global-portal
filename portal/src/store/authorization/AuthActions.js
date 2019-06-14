@@ -21,9 +21,9 @@ export const loginError = (error) => {
   }
 }
 
-export const submitLogout = (loginParams) => {
+export const submitLogout = () => {
   return {
     type: "SUBMIT_LOGOUT",
-    payload: { params: loginParams }
   }
 }
+

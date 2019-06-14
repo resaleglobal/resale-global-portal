@@ -1,4 +1,5 @@
 import store from './../store/store';
+import { submitLogout } from '../store/authorization/AuthActions';
 
 
 export const get = (url) => {
@@ -10,11 +11,11 @@ export const getNonAuth = (url) => {
 }
 
 export const post = (url, params) => {
-  return fetchBase(url, 'GET', getAuthHeader(), params)
+  return fetchBase(url, 'POST', getAuthHeader(), params)
 }
 
 export const postNonAuth = (url, params) => {
-  return fetchBase(url, 'GET', {}, params)
+  return fetchBase(url, 'POST', {}, params)
 }
 
 const getAuthHeader = () => {
@@ -51,4 +52,20 @@ const fetchBase = (url, method, headers={}, params=null) => {
 
 
   return fetch(`http://localhost:8000${url}`, content)
+    .then( response => {
+
+      if (!response.ok) {
+        switch(response.status) {
+          case 401:
+            if (store.getState().auth.token) {
+              store.dispatch(submitLogout())
+            }
+            break
+          default:
+            break
+        }
+      }
+
+      return response
+    })
 }
