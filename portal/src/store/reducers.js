@@ -18,6 +18,8 @@ const appReducer =  combineReducers({
 })
 
 export default (state, action) => {
+
+  // Initialize state on logout.
   if (action.type === 'SUBMIT_LOGOUT') {
     localStorage.removeItem(AUTH_TOKEN)
     state = undefined

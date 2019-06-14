@@ -1,7 +1,5 @@
-
-
 export const initialUserState = {
-  userLoaded: false,
+  userLoaded: false, // Reflects whether the initial user call has completed.
   loadingUser: false,
   hasError: false,
   error: null,
@@ -34,6 +32,7 @@ export default (state = initialUserState, action) => {
         ...state,
         loadingUser: false,
         hasError: true,
+        userLoaded: true,
         error: action.payload.error
       }
 

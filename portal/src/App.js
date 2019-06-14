@@ -41,9 +41,7 @@ class AuthAppBody extends Component {
     return (
       <>
       {
-        // TODO: What to do when the user request has an error?
-        this.props.user.hasError ? (<AppBody { ...this.props} />) :
-        this.props.user.userLoaded ? (<AppBody { ...this.props} />) :
+        this.props.user.userLoaded ? (<AppPageSection { ...this.props} />) :
           this.props.auth.token !== null ?
             (this.props.user.loadingUser ? <AppLoader /> : this.getUser()) :
             (<Redirect to="/login" />)
@@ -63,42 +61,73 @@ class AppLoader extends Component {
   }
 }
 
-class AppBody extends Component {
+class AppPageSection extends Component {
   render() {
     return (
       <Route path="/app">
         <Navbar {...this.props} />
         <div className="body">
-          <Route path="/app/admin"
-            render={(routeProps) => (
-              this.props.showAdmin? 
-              (<Content {...routeProps} links={adminLinks} />)
-              : (<Redirect to="/app" />)
-            )}
-          />
-          <Route path="/app/reseller"
-            render={(routeProps) => (
-              this.props.showReseller ? 
-              (<Content {...routeProps} links={resellerLinks} />)
-              : (<Redirect to="/app" />)
-            )}
-          />
-          <Route path="/app/consignor"
-            render={(routeProps) => (
-              this.props.showConsignor ? 
-              (<Content {...routeProps} links={consignorLinks} />)
-              : (<Redirect to="/app" />)
-            )}
-          />
-          <Route path="/app/buyer"
-            render={(routeProps) => (
-              this.props.showBuyer ? 
-              (<Content {...routeProps} links={buyerLinks} />)
-              : (<Redirect to="/app" />)
-            )}
-          />
+            {
+              this.props.user.hasError ? (<AppUserError { ...this.props } />) :
+                this.props.isNewAccount ? (<AppNewAccount { ...this.props } />) :
+                (<AppPageRoutes { ...this.props } />)
+            }
+            <AppPageRoutes { ...this.props } />
         </div>
       </Route>
+    )
+  }
+}
+
+class AppUserError extends Component {
+  render() {
+    return (
+      <div>Error loading user!</div>
+    )
+  }
+}
+
+class AppNewAccount extends Component {
+  render() {
+    return (
+      <div>Welcome, time to set up your new account!</div>
+    )
+  }
+}
+
+class AppPageRoutes extends Component {
+  render() {
+    return (
+      <>
+      <Route path="/app/admin"
+        render={(routeProps) => (
+          this.props.showAdmin? 
+          (<Content {...routeProps} links={adminLinks} />)
+          : (<Redirect to="/app" />)
+        )}
+      />
+      <Route path="/app/reseller"
+        render={(routeProps) => (
+          this.props.showReseller ? 
+          (<Content {...routeProps} links={resellerLinks} />)
+          : (<Redirect to="/app" />)
+        )}
+      />
+      <Route path="/app/consignor"
+        render={(routeProps) => (
+          this.props.showConsignor ? 
+          (<Content {...routeProps} links={consignorLinks} />)
+          : (<Redirect to="/app" />)
+        )}
+      />
+      <Route path="/app/buyer"
+        render={(routeProps) => (
+          this.props.showBuyer ? 
+          (<Content {...routeProps} links={buyerLinks} />)
+          : (<Redirect to="/app" />)
+        )}
+      />
+      </>
     )
   }
 }
