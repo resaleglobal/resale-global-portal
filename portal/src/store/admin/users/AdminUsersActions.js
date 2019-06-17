@@ -1,19 +1,19 @@
 export const fetchAdminUsers = () => {
   return {
     type: "FETCH_ADMIN_USERS"
-  }
-}
+  };
+};
 
-export const fetchUserSuccess = (users) => {
+export const fetchUserSuccess = users => {
   return {
     type: "FETCH_ADMIN_USERS_SUCCESS",
-    payload: {users}
-  }
-}
+    payload: { users }
+  };
+};
 
-export const fetchUserError = (error) => {
+export const fetchUserError = error => {
   return {
     type: "FETCH_ADMIN_USERS_ERROR",
-    payload: {error}
-  }
-}
+    payload: { error }
+  };
+};

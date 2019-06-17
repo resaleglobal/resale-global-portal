@@ -1,48 +1,45 @@
-export const AUTH_TOKEN = 'auth-token'
+export const AUTH_TOKEN = "auth-token";
 
 export const initialAuthState = {
   token: localStorage.getItem(AUTH_TOKEN),
   loginLoading: false,
   loginError: false,
-  loginErrorMessage: '',
+  loginErrorMessage: "",
   logoutLoading: false
-}
-
+};
 
 export default (state = initialAuthState, action) => {
-
   switch (action.type) {
     case "SUBMIT_LOGIN":
       return {
         ...state,
         loginError: false,
-        loginErrorMessage: '',
+        loginErrorMessage: "",
         loginLoading: true
-      }
+      };
     case "LOGIN_SUCCESS":
-
-      localStorage.setItem(AUTH_TOKEN, action.payload.token)
+      localStorage.setItem(AUTH_TOKEN, action.payload.token);
 
       return {
         ...state,
         token: action.payload.token,
         loginLoading: false
-      }
+      };
     case "LOGIN_ERROR":
       return {
         ...state,
         loginError: true,
         loginErrorMessage: action.payload.error,
-        loginLoading: false,
-      }
-    
+        loginLoading: false
+      };
+
     case "SUBMIT_LOGOUT":
       return {
         ...state,
         logoutLoading: true
-      }
+      };
 
     default:
-      return state
+      return state;
   }
-}
+};
