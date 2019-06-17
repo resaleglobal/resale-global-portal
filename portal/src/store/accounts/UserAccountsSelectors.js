@@ -1,5 +1,3 @@
-
-
 export const showAdmin = (state) => {
   if (state.userAccount.selected.type === 'reseller') {
     if (state.userAccount.selected.isAdmin) {
@@ -24,4 +22,8 @@ export const showBuyer = (state) => {
 
 export const isNewAccount = (state) => {
   return !showAdmin(state) && !showReseller(state) && !showConsignor(state) && !showBuyer(state) ? true : false
+}
+
+export const isAccountSelected = (state) => {
+  return state.userAccount.selected.id !== null
 }

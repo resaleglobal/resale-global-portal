@@ -7,9 +7,11 @@ import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import { submitLogin } from '../../store/authorization/AuthActions';
 import {Redirect} from 'react-router-dom'
+import queryString from 'query-string'
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 
+import { isAppAuthenticated } from  './../../store/AppSelectors'
 
 class Login extends Component {
 
@@ -20,10 +22,9 @@ class Login extends Component {
       email: '',
       password: '',
       passwordError: false,
-      emailError: false
+      emailError: false,
     };
   }
-
 
   handleSubmit = () => {
     this.setState({
@@ -66,10 +67,14 @@ class Login extends Component {
   }
 
   render() {
-    const {loading, token, hasError, error} = this.props
+    const {loading, isAppAuthenticated, hasError, error} = this.props
 
-    if (token) {
-      return (<Redirect to="/app" />);
+    const values = queryString.parse(this.props.location.search)
+    const domain = values.domain ? values.domain : ''
+    const url = `/${domain}`
+
+    if (isAppAuthenticated) {
+      return (<Redirect to={url} />);
     }
 
     return (
@@ -132,9 +137,9 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => ({
   loading: state.auth.loginLoading,
-  token: state.auth.token,
   hasError: state.auth.loginError,
-  error: state.auth.loginErrorMessage
+  error: state.auth.loginErrorMessage,
+  isAppAuthenticated: isAppAuthenticated(state),
 })
 
 

@@ -27,3 +27,9 @@ export const submitLogout = () => {
   }
 }
 
+export const submitLogoutSuccess = () => {
+  return {
+    type: "SUBMIT_LOGOUT_SUCCESS",
+  }
+}
+

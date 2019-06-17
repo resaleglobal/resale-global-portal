@@ -6,7 +6,8 @@ export const initialUserAccountState = {
   hasPurchases: false,
   selected: {
     type: null,
-    id: null
+    id: null,
+    domain: null
   }
 }
 

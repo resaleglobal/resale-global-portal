@@ -4,11 +4,13 @@ export const initialAuthState = {
   token: localStorage.getItem(AUTH_TOKEN),
   loginLoading: false,
   loginError: false,
-  loginErrorMessage: ''
+  loginErrorMessage: '',
+  logoutLoading: false
 }
 
 
 export default (state = initialAuthState, action) => {
+
   switch (action.type) {
     case "SUBMIT_LOGIN":
       return {
@@ -18,6 +20,7 @@ export default (state = initialAuthState, action) => {
         loginLoading: true
       }
     case "LOGIN_SUCCESS":
+
       localStorage.setItem(AUTH_TOKEN, action.payload.token)
 
       return {
@@ -31,6 +34,12 @@ export default (state = initialAuthState, action) => {
         loginError: true,
         loginErrorMessage: action.payload.error,
         loginLoading: false,
+      }
+    
+    case "SUBMIT_LOGOUT":
+      return {
+        ...state,
+        logoutLoading: true
       }
 
     default:

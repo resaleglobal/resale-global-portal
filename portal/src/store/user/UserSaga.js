@@ -10,7 +10,7 @@ import { get } from './../../utils/RestUtils'
 
 const getUser = () => {
 
-  return get("/account/v1/uer")
+  return get("/account/v1/user")
     .then(response => {
       if (!response.ok) {
         switch(response.status) {
@@ -27,10 +27,6 @@ const getUser = () => {
 function* fetchUser(action) {
   try {
     const data = yield call(getUser)
-
-    if (data.resellers.length > 0) {
-      
-    }
 
     yield put(fetchUserSuccess(data));
   } catch (e) {

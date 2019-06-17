@@ -58,7 +58,7 @@ const fetchBase = (url, method, headers={}, params=null) => {
         switch(response.status) {
           case 401:
             if (store.getState().auth.token) {
-              store.dispatch(submitLogout())
+              return store.dispatch(submitLogout())
             }
             break
           default:
