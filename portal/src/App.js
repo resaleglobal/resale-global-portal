@@ -21,7 +21,8 @@ import {
   showBuyer,
   showConsignor,
   showReseller,
-  isAccountSelected
+  isAccountSelected,
+  getValidDomains
 } from "./store/accounts/UserAccountsSelectors";
 
 import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
@@ -35,11 +36,17 @@ import {
   isAppAuthenticated
 } from "./store/AppSelectors";
 
+import CreateAccountPage from "./pages/account/create/CreateAccount";
+import SelectAccountPage from "./pages/account/select/SelectAccount";
+
+const showNavbarRoutes = ["/login"];
+const isShowNavbarRoute = route => showNavbarRoutes.includes(route);
+
 class App extends Component {
   render() {
     return (
       <div className="App">
-        {this.props.location.pathname !== "/login" ? (
+        {!isShowNavbarRoute(this.props.location.pathname) ? (
           <AuthAppBody {...this.props} />
         ) : (
           <></>
@@ -56,21 +63,40 @@ class AuthAppBody extends Component {
   };
 
   render() {
-    return (
-      <>
-        {this.props.isAppLoaded ? (
-          <AppPageSection {...this.props} />
-        ) : this.props.auth.token !== null ? (
-          this.props.isAppLoading ? (
-            <AppLoader />
-          ) : (
-            this.getUser()
-          )
-        ) : (
-          <HandleLoginRedirect />
-        )}
-      </>
-    );
+    if (this.props.isAppLoading) {
+      return <AppLoader />;
+    }
+
+    if (this.props.isAppLoaded) {
+      return (
+        <>
+          <Navbar {...this.props} />
+          <div className="body">
+            <Switch>
+              <Route
+                exact
+                path="/create-account"
+                component={CreateAccountPage}
+              />
+              <Route
+                exact
+                path="/select-account"
+                component={SelectAccountPage}
+              />
+              <Route path="/">
+                <AppPageSection {...this.props} />
+              </Route>
+            </Switch>
+          </div>
+        </>
+      );
+    }
+
+    if (this.props.isAppAuthenticated) {
+      return <>{this.getUser()}</>;
+    }
+
+    return <HandleLoginRedirect />;
   }
 }
 
@@ -120,20 +146,15 @@ class AppLoader extends Component {
 
 class AppPageSection extends Component {
   render() {
-    return (
-      <Route path="/">
-        <Navbar {...this.props} />
-        <div className="body">
-          {this.props.isAppError ? (
-            <AppError {...this.props} />
-          ) : this.props.isAccountSelected ? (
-            <AppPageRoutes {...this.props} />
-          ) : (
-            <AppSelectDomain {...this.props} />
-          )}
-        </div>
-      </Route>
-    );
+    if (this.props.isAppError) {
+      return <AppError {...this.props} />;
+    }
+
+    if (this.props.isAccountSelected) {
+      return <AppPageRoutes {...this.props} />;
+    }
+
+    return <AppSelectDomain {...this.props} />;
   }
 }
 
@@ -148,10 +169,12 @@ class AppError extends Component {
         <ErrorOutlineIcon className="error-icon" />
         <div className="error-message">
           There was an error loading the app. Try refreshing the page. If the
-          error persists,{" "}
+          error persists,
+          {" "}
           <span onClick={this.submitLogout} className="link">
             click here to logout
-          </span>{" "}
+          </span>
+          {" "}
           and then log back in. If the issue persists, contact the administrator
           at admin@resaleglobal.com.
         </div>
@@ -162,21 +185,45 @@ class AppError extends Component {
 
 class AppSelectDomain extends Component {
   render() {
+    if (this.props.isNewAccount) {
+      return <Redirect to="/create-account" />;
+    }
+
+    if (this.isAccountSelected) {
+      return <AppPageRoutes {...this.props} />;
+    }
+
     return (
-      <div>
-        {this.props.isNewAccount ? (
-          <AppNewAccount {...this.props} />
-        ) : (
-          <AppPageRoutes {...this.props} />
-        )}
-      </div>
+      <Switch>
+        <Route
+          path="/:domain"
+          render={routeProps => (
+            <AutoSelectDomain
+              {...routeProps}
+              getValidDomains={this.props.getValidDomains}
+            />
+          )}
+        />
+        <Route path="/">
+          <Redirect to="/select-account" />
+        </Route>
+      </Switch>
     );
   }
 }
 
-class AppNewAccount extends Component {
+class AutoSelectDomain extends Component {
+  isValidDomain = () => {
+    return this.props.getValidDomains.includes(this.props.match.params.domain);
+  };
+
   render() {
-    return <div>Welcome, time to set up your new account!</div>;
+    if (this.isValidDomain()) {
+      // TODO: SELECT DOMAIN in state.
+    }
+
+    // If domain in url is invalid redirect.
+    return <Redirect to="/" />;
   }
 }
 
@@ -241,7 +288,8 @@ const mapStateToProps = state => ({
   showConsignor: showConsignor(state),
   showResller: showReseller(state),
   showBuyer: showBuyer(state),
-  isAccountSelected: isAccountSelected(state)
+  isAccountSelected: isAccountSelected(state),
+  getValidDomains: getValidDomains(state)
 });
 
 const mapDispatchToProps = dispatch => {

@@ -1,5 +1,4 @@
 export const createReseller = params => {
-  console.log(params);
   return {
     type: "CREATE_RESELLER",
     payload: { params }

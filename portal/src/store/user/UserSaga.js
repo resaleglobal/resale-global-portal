@@ -1,12 +1,12 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import { fetchUserError, fetchUserSuccess } from "./UserActions";
-import { get } from "./../../utils/RestUtils";
+import { get } from "../../utils/RestUtils";
 
-//const delayReject = time => new Promise((_, reject) => setTimeout(() => {
+// const delayReject = time => new Promise((_, reject) => setTimeout(() => {
 //  reject(new Error('You provided invalid creds.'))
-//}, time));
+// }, time));
 
-//const delayResolve = time => new Promise((resolve) => setTimeout(() => resolve('token'), time));
+// const delayResolve = time => new Promise((resolve) => setTimeout(() => resolve('token'), time));
 
 const getUser = () => {
   return get("/account/v1/user").then(response => {
