@@ -19,8 +19,6 @@ import {
   showReseller
 } from "./store/accounts/UserAccountsSelectors";
 
-import { createReseller } from "./store/accounts/UserAccountsActions";
-
 import CreateAccountPage from "./pages/account/create/CreateAccount";
 import SelectAccountPage from "./pages/account/select/SelectAccount";
 import AppAuthenticated from "./components/app/AppAuthenticated";

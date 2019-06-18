@@ -47,8 +47,10 @@ class LoginRedirectToDomain extends Component {
   }
 
   render() {
-    const url = `/login?domain=${this.state.domain}`;
-    return this.state.domain ? <Redirect to={url} /> : null;
+    const url = this.state.domain
+      ? `/login?domain=${this.state.domain}`
+      : "/login";
+    return <Redirect to={url} />;
   }
 }
 
