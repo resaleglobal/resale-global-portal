@@ -1,8 +1,13 @@
 import React, { Component } from "react";
+import AppNonAccountBody from "../../../components/app/AppNonAccountBody";
 
 class CreateAccountPage extends Component {
   render() {
-    return <div>Create Account</div>;
+    return (
+      <AppNonAccountBody header="Create Account">
+        Create Account
+      </AppNonAccountBody>
+    );
   }
 }
 

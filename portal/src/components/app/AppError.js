@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 
 import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
 import { isAppError } from "../../store/AppSelectors";
+import AppNonAccountBody from "./AppNonAccountBody";
 
 class AppError extends Component {
   submitLogout = () => {
@@ -15,7 +16,7 @@ class AppError extends Component {
     }
 
     return (
-      <div className="error-container">
+      <AppNonAccountBody>
         <ErrorOutlineIcon className="error-icon" />
         <div className="error-message">
           There was an error loading the app. Try refreshing the page. If the
@@ -28,7 +29,7 @@ class AppError extends Component {
           and then log back in. If the issue persists, contact the administrator
           at admin@resaleglobal.com.
         </div>
-      </div>
+      </AppNonAccountBody>
     );
   }
 }

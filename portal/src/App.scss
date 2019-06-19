@@ -3,7 +3,7 @@
   flex-direction: column;
 
   .body {
-    display:flex;
+    display: flex;
     flex-direction: row;
   }
 }
@@ -19,7 +19,7 @@
 }
 
 .table-head {
-  background-color: #D8D8D8;
+  background-color: #d8d8d8;
 
   th {
     color: #565656;
@@ -27,17 +27,16 @@
     font-weight: 500;
     padding: 8px 40px 8px 16px;
   }
-  
 }
 
 tbody {
   tr {
     td {
       &.table-profile {
-        padding:0px;
-  
+        padding: 0px;
+
         img {
-          position:relative;
+          position: relative;
           top: 3px;
           height: 35px;
           width: 35px;
@@ -45,17 +44,16 @@ tbody {
         }
       }
     }
-
   }
 }
 
 .permissions {
   display: flex;
   flex-direction: row;
-  
+
   div {
-    padding:5px;
-    border: 1px solid #D8D8D8;
+    padding: 5px;
+    border: 1px solid #d8d8d8;
     margin-right: 8px;
     text-transform: uppercase;
     font-weight: 100;
@@ -66,31 +64,39 @@ tbody {
   }
 }
 
-.error-container {
+.non-account-body {
   width: 70%;
-  margin: 125px auto;
+  margin: 100px auto;
   background-color: white;
-  padding: 75px;
-  padding-top: 40px;
+  padding: 25px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: 36px;
-  text-align: center;
   box-shadow: 0px 2px 3px rgba(4, 0, 0, 0.5);
   border-radius: 5px;
 
-  .error-icon {
-    width: 150px;
-    height: 150px;
-    margin-bottom: 20px;
-    color: #BD7676;
+  .non-account-body-header {
+    border-bottom: 2px solid #d8d8d8;
+    margin-bottom: 30px;
+    width: 100%;
   }
+}
 
+.error-icon {
+  width: 150px !important;
+  height: 150px !important;
+  margin-bottom: 20px;
+  color: #bd7676;
+}
+
+.error-message {
+  text-align: center;
+  font-size: 36px;
+  margin-bottom: 25px;
   .link {
-    color: #4A90E2;
-    
+    color: #4a90e2;
+
     &:hover {
       cursor: pointer;
       color: rgb(54, 109, 172);
