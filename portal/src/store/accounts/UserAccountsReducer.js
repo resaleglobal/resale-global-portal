@@ -1,4 +1,5 @@
 export const initialUserAccountState = {
+  userLoaded: false,
   consignors: [],
   resellers: [],
   hasPurchases: false,
@@ -21,17 +22,29 @@ export const initialUserAccountState = {
 
 export default (state = initialUserAccountState, action) => {
   switch (action.type) {
+    case "SELECT_ACCOUNT":
+      return {
+        ...state,
+        selected: {
+          ...state.selected,
+          type: action.payload.params.type,
+          id: action.payload.params.id,
+          domain: action.payload.params.domain
+        }
+      };
+
     case "FETCH_USER_SUCCESS":
       return {
         ...state,
         consignors: action.payload.user.consignors,
-        resellers: action.payload.user.resellers
+        resellers: action.payload.user.resellers,
+        userLoaded: true
       };
 
-    case "SELECT_ACCOUNT":
+    case "FETCH_USER_ERROR":
       return {
         ...state,
-        selected: action.payload.selected
+        userLoaded: true
       };
 
     case "CREATE_RESELLER":

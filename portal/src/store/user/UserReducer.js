@@ -1,5 +1,4 @@
 export const initialUserState = {
-  userLoaded: false, // Reflects whether the initial user call has completed.
   loadingUser: false,
   hasError: false,
   error: null,
@@ -21,8 +20,7 @@ export default (state = initialUserState, action) => {
     case "FETCH_USER_SUCCESS":
       return {
         ...state,
-        loadingUser: false,
-        userLoaded: true
+        loadingUser: false
       };
 
     case "FETCH_USER_ERROR":
@@ -30,7 +28,6 @@ export default (state = initialUserState, action) => {
         ...state,
         loadingUser: false,
         hasError: true,
-        userLoaded: true,
         error: action.payload.error
       };
 

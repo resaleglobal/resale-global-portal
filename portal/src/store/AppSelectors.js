@@ -12,7 +12,7 @@ export const isAppLoading = state => {
  */
 export const isAppLoaded = state => {
   const loadedChecks = [
-    state.user.userLoaded, // Initial user has loaded.
+    state.userAccount.userLoaded, // Initial user has loaded.
     !state.auth.logoutLoading // If logout is loading, the app is no longer loaded.
   ];
 

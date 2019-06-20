@@ -1,3 +1,10 @@
+export const selectAccount = params => {
+  return {
+    type: "SELECT_ACCOUNT",
+    payload: { params }
+  };
+};
+
 export const createReseller = params => {
   return {
     type: "CREATE_RESELLER",

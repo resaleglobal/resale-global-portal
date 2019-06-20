@@ -3,7 +3,8 @@ import {
   createResellerSuccess,
   createResellerFailure,
   createConsignorSuccess,
-  createConsignorFailure
+  createConsignorFailure,
+  selectAccount
 } from "./UserAccountsActions";
 import { post } from "../../utils/RestUtils";
 
@@ -17,6 +18,13 @@ function* createReseller(action) {
   try {
     const data = yield call(postReseller, action.payload.params);
     yield put(createResellerSuccess(data));
+    yield put(
+      selectAccount({
+        type: "RESELLER",
+        id: data.reseller.id,
+        domain: data.reseller.domain
+      })
+    );
   } catch (e) {
     yield put(createResellerFailure(e.message));
   }
