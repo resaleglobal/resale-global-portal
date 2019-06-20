@@ -52,6 +52,7 @@ class AutoSelectDomain extends Component {
 
   render() {
     if (this.isValidDomain()) {
+      // Select account, but don't change url.
       const account = this.props.accounts.filter(a => {
         return a.domain === this.props.match.params.domain;
       })[0];

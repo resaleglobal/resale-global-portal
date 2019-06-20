@@ -18,13 +18,7 @@ function* createReseller(action) {
   try {
     const data = yield call(postReseller, action.payload.params);
     yield put(createResellerSuccess(data));
-    yield put(
-      selectAccount({
-        type: "RESELLER",
-        id: data.reseller.id,
-        domain: data.reseller.domain
-      })
-    );
+    yield put(selectAccount({ ...data, type: "RESELLER" }));
   } catch (e) {
     yield put(createResellerFailure(e.message));
   }
@@ -44,6 +38,7 @@ function* createConsignor(action) {
   try {
     const data = yield call(postConsignor, action.payload.params);
     yield put(createConsignorSuccess(data));
+    yield put(selectAccount({ ...data, type: "CONSIGNOR" }));
   } catch (e) {
     yield put(createConsignorFailure(e.message));
   }

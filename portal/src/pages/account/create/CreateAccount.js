@@ -15,6 +15,9 @@ import {
   createConsignor
 } from "../../../store/accounts/UserAccountsActions";
 
+import { isAccountSelected } from "../../../store/accounts/UserAccountsSelectors";
+import { Redirect } from "react-router-dom";
+
 class CreateAccountPage extends Component {
   constructor(props) {
     super(props);
@@ -110,8 +113,14 @@ class CreateAccountPage extends Component {
       rError,
       cLoading,
       cHasError,
-      cError
+      cError,
+      isAccountSelected,
+      domain
     } = this.props;
+
+    if (isAccountSelected) {
+      return <Redirect to={`/${domain}`} />;
+    }
 
     return (
       <AppNonAccountBody header="Create Account">
@@ -244,7 +253,9 @@ const mapStateToProps = state => ({
   cError: state.userAccount.createConsignor.error,
   rLoading: state.userAccount.createReseller.loading,
   rHasError: state.userAccount.createReseller.hasError,
-  rError: state.userAccount.createReseller.error
+  rError: state.userAccount.createReseller.error,
+  domain: state.userAccount.selected.domain,
+  isAccountSelected: isAccountSelected(state)
 });
 
 export default connect(
