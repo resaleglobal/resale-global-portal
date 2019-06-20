@@ -1,19 +1,17 @@
 export const showAdmin = state => {
-  if (state.userAccount.selected.type === "reseller") {
-    if (state.userAccount.selected.isAdmin) {
-      return true;
-    }
+  if (state.userAccount.selected.type === "RESELLER") {
+    return state.userAccount.selected.isAdmin;
   }
 
   return false;
 };
 
 export const showReseller = state => {
-  return state.userAccount.selected.type === "reseller";
+  return state.userAccount.selected.type === "RESELLER";
 };
 
 export const showConsignor = state => {
-  return state.userAccount.selected.type === "reseller";
+  return state.userAccount.selected.type === "CONSIGNOR";
 };
 
 export const showBuyer = state => {

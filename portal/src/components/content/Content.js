@@ -15,34 +15,50 @@ class Content extends Component {
           {/* Redirects for parent routes */}
           <Route
             exact
-            path="/app/admin"
-            render={() => <Redirect to="/app/admin/dashboard" />}
+            path="/:domain/admin"
+            render={props => (
+              <Redirect to={`/${props.match.params.domain}/admin/dashboard`} />
+            )}
           />
           <Route
             exact
-            path="/app/reseller"
-            render={() => <Redirect to="/app/reseller/dashboard" />}
+            path="/:domain/reseller"
+            render={props => (
+              <Redirect
+                to={`/${props.match.params.domain}/reseller/dashboard`}
+              />
+            )}
           />
           <Route
             exact
-            path="/app/consignor"
-            render={() => <Redirect to="/app/consignor/dashboard" />}
+            path="/:domain/consignor"
+            render={props => (
+              <Redirect
+                to={`/${props.match.params.domain}/consignor/dashboard`}
+              />
+            )}
           />
           <Route
             exact
-            path="/app/buyer"
-            render={() => <Redirect to="/app/buyer/history" />}
+            path="/:domain/buyer"
+            render={props => (
+              <Redirect to={`/${props.match.params.domain}/buyer/history`} />
+            )}
           />
 
           {/* Routes for admin */}
-          <Route exact path="/app/admin/users" component={AdminUsersPage} />
+          <Route exact path="/:domain/admin/users" component={AdminUsersPage} />
 
           {/* Routes for reseller */}
 
           {/* Routes for consignor */}
 
           {/* Routes for buyer */}
-          <Route exact path="/app/buyer/history" component={BuyerHistoryPage} />
+          <Route
+            exact
+            path="/:domain/buyer/history"
+            component={BuyerHistoryPage}
+          />
         </Body>
       </>
     );

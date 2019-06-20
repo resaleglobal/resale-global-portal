@@ -5,7 +5,11 @@ class Body extends Component {
   render() {
     const pages = this.props.location.pathname
       .split("/")
-      .filter(page => page !== "app" && page !== "");
+      .filter(page => page !== "");
+
+    // Remove the account domain
+    pages.shift();
+
     return (
       <div className="body-container">
         <div className="body-header">

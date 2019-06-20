@@ -16,7 +16,8 @@ export const initialUserAccountState = {
   selected: {
     type: null,
     id: null,
-    domain: null
+    domain: null,
+    isAdmin: false
   }
 };
 
@@ -29,7 +30,8 @@ export default (state = initialUserAccountState, action) => {
           ...state.selected,
           type: action.payload.params.type,
           id: action.payload.params.id,
-          domain: action.payload.params.domain
+          domain: action.payload.params.domain,
+          isAdmin: action.payload.params.isAdmin
         }
       };
 

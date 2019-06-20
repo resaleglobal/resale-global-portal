@@ -7,6 +7,7 @@ import {
   isAccountSelected,
   getValidDomains
 } from "../../store/accounts/UserAccountsSelectors";
+import { selectAccount } from "../../store/accounts/UserAccountsActions";
 
 class AppSelectDomain extends Component {
   render() {
@@ -26,6 +27,13 @@ class AppSelectDomain extends Component {
             <AutoSelectDomain
               {...routeProps}
               getValidDomains={this.props.getValidDomains}
+              selectAccount={this.props.selectAccount}
+              accounts={[
+                ...this.props.consignors.map(c => [
+                  { ...c, type: "CONSIGNOR" }
+                ]),
+                ...this.props.resellers.map(r => [{ ...r, type: "RESELLER" }])
+              ].flat()}
             />
           )}
         />
@@ -44,7 +52,12 @@ class AutoSelectDomain extends Component {
 
   render() {
     if (this.isValidDomain()) {
-      // TODO: SELECT DOMAIN in state.
+      const account = this.props.accounts.filter(a => {
+        return a.domain === this.props.match.params.domain;
+      })[0];
+
+      this.props.selectAccount(account);
+      return null;
     }
 
     // If domain in url is invalid redirect.
@@ -55,10 +68,18 @@ class AutoSelectDomain extends Component {
 const mapStateToProps = state => ({
   isAccountSelected: isAccountSelected(state),
   isNewAccount: isNewAccount(state),
-  getValidDomains: getValidDomains(state)
+  getValidDomains: getValidDomains(state),
+  consignors: state.userAccount.consignors,
+  resellers: state.userAccount.resellers
 });
+
+const mapDispatchToProps = dispatch => {
+  return {
+    selectAccount: params => dispatch(selectAccount(params))
+  };
+};
 
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(AppSelectDomain);

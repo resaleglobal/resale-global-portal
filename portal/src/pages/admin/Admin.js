@@ -3,15 +3,15 @@ import { OVERRIDE_SHOW } from "./../../components/sidebar/Sidebar";
 export const adminLinks = [
   {
     name: "dashboard",
-    url: "/app/admin/dashboard",
+    url: "/admin/dashboard",
     show: OVERRIDE_SHOW || true
   },
-  { name: "users", url: "/app/admin/users", show: OVERRIDE_SHOW || false },
+  { name: "users", url: "/admin/users", show: OVERRIDE_SHOW || false },
   {
     name: "consignors",
-    url: "/app/admin/consignors",
+    url: "/admin/consignors",
     show: OVERRIDE_SHOW || false
   },
-  { name: "account", url: "/app/admin/account", show: OVERRIDE_SHOW || false },
-  { name: "revenue", url: "/app/admin/revenue", show: OVERRIDE_SHOW || false }
+  { name: "account", url: "/admin/account", show: OVERRIDE_SHOW || false },
+  { name: "revenue", url: "/admin/revenue", show: OVERRIDE_SHOW || false }
 ];

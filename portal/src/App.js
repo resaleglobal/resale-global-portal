@@ -131,7 +131,7 @@ const mapStateToProps = state => ({
   user: state.user,
   showAdmin: showAdmin(state),
   showConsignor: showConsignor(state),
-  showResller: showReseller(state),
+  showReseller: showReseller(state),
   showBuyer: showBuyer(state)
 });
 

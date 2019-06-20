@@ -71,6 +71,7 @@ class Navbar extends Component {
   };
 
   render() {
+    const { domain } = this.props;
     let profile = this.props.user.profile;
     if (!profile) {
       profile =
@@ -85,28 +86,28 @@ class Navbar extends Component {
         </div>
         <div className="links">
           {this.props.showAdmin ? (
-            <NavLink activeClassName="active-link" to="/app/admin">
+            <NavLink activeClassName="active-link" to={`/${domain}/admin`}>
               Admin
             </NavLink>
           ) : (
             <></>
           )}
           {this.props.showReseller ? (
-            <NavLink activeClassName="active-link" to="/app/reseller">
+            <NavLink activeClassName="active-link" to={`/${domain}/reseller`}>
               Reseller
             </NavLink>
           ) : (
             <></>
           )}
           {this.props.showConsignor ? (
-            <NavLink activeClassName="active-link" to="/app/consignor">
+            <NavLink activeClassName="active-link" to={`/${domain}/consignor`}>
               Consignor
             </NavLink>
           ) : (
             <></>
           )}
           {this.props.showBuyer ? (
-            <NavLink activeClassName="active-link" to="/app/buyer">
+            <NavLink activeClassName="active-link" to={`/${domain}/buyer`}>
               Buyer
             </NavLink>
           ) : (
@@ -157,7 +158,8 @@ const mapStateToProps = state => {
     showAdmin: showAdmin(state),
     showConsignor: showConsignor(state),
     showResller: showReseller(state),
-    showBuyer: showBuyer(state)
+    showBuyer: showBuyer(state),
+    domain: state.userAccount.selected.domain
   };
 };
 
