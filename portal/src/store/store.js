@@ -5,7 +5,10 @@ import reducers from "./reducers";
 import createSagaMiddleware from "redux-saga";
 import { loginSaga, logoutSaga } from "./authorization/AuthSagas";
 import { userSaga } from "./user/UserSaga";
-import { createResellerSaga } from "./accounts/UserAccountsSagas";
+import {
+  createResellerSaga,
+  createConsignorSaga
+} from "./accounts/UserAccountsSagas";
 
 // create the saga middleware
 const sagaMiddleware = createSagaMiddleware();
@@ -21,6 +24,7 @@ const store = createStore(
 sagaMiddleware.run(loginSaga);
 sagaMiddleware.run(userSaga);
 sagaMiddleware.run(createResellerSaga);
+sagaMiddleware.run(createConsignorSaga);
 sagaMiddleware.run(logoutSaga);
 
 export default store;

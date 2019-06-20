@@ -1,7 +1,9 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import {
   createResellerSuccess,
-  createResellerFailure
+  createResellerFailure,
+  createConsignorSuccess,
+  createConsignorFailure
 } from "./UserAccountsActions";
 import { post } from "../../utils/RestUtils";
 
@@ -22,4 +24,23 @@ function* createReseller(action) {
 
 export function* createResellerSaga() {
   yield takeLatest("CREATE_RESELLER", createReseller);
+}
+
+const postConsignor = params => {
+  return post("/account/v1/consignor", params).then(response => {
+    return response.json();
+  });
+};
+
+function* createConsignor(action) {
+  try {
+    const data = yield call(postConsignor, action.payload.params);
+    yield put(createConsignorSuccess(data));
+  } catch (e) {
+    yield put(createConsignorFailure(e.message));
+  }
+}
+
+export function* createConsignorSaga() {
+  yield takeLatest("CREATE_CONSIGNOR", createConsignor);
 }

@@ -11,7 +11,7 @@ import queryString from "query-string";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-import { isAppAuthenticated } from "./../../store/AppSelectors";
+import { isAppAuthenticated } from "../../store/AppSelectors";
 
 class Login extends Component {
   constructor(props) {

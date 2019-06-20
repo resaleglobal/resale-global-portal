@@ -2,6 +2,16 @@ export const initialUserAccountState = {
   consignors: [],
   resellers: [],
   hasPurchases: false,
+  createReseller: {
+    loading: false,
+    hasError: false,
+    error: null
+  },
+  createConsignor: {
+    loading: false,
+    hasError: false,
+    error: null
+  },
   selected: {
     type: null,
     id: null,
@@ -22,6 +32,68 @@ export default (state = initialUserAccountState, action) => {
       return {
         ...state,
         selected: action.payload.selected
+      };
+
+    case "CREATE_RESELLER":
+      return {
+        ...state,
+        createReseller: {
+          ...state.createReseller,
+          hasError: false,
+          loading: true,
+          error: null
+        }
+      };
+
+    case "CREATE_RESELLER_SUCCESS":
+      return {
+        ...state,
+        createReseller: {
+          ...state.createReseller,
+          loading: false
+        }
+      };
+
+    case "CREATE_RESELLER_FAILURE":
+      return {
+        ...state,
+        createReseller: {
+          ...state.createReseller,
+          hasError: true,
+          loading: false,
+          error: action.payload.error
+        }
+      };
+
+    case "CREATE_CONSIGNOR":
+      return {
+        ...state,
+        createConsignor: {
+          ...state.createConsignor,
+          hasError: false,
+          loading: true,
+          error: null
+        }
+      };
+
+    case "CREATE_CONSIGNOR_SUCCESS":
+      return {
+        ...state,
+        createConsignor: {
+          ...state.createConsignor,
+          loading: false
+        }
+      };
+
+    case "CREATE_CONSIGNOR_FAILURE":
+      return {
+        ...state,
+        createConsignor: {
+          ...state.createConsignor,
+          hasError: true,
+          loading: false,
+          error: action.payload.error
+        }
       };
 
     default:
