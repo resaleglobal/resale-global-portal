@@ -4,9 +4,9 @@ import { Route, Redirect, Switch } from "react-router-dom";
 
 import {
   isNewAccount,
-  isAccountSelected
-, getValidDomains } from "../../store/accounts/UserAccountsSelectors";
-
+  isAccountSelected,
+  getValidDomains
+} from "../../store/accounts/UserAccountsSelectors";
 
 class AppSelectDomain extends Component {
   render() {

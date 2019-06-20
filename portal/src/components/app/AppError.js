@@ -20,12 +20,10 @@ class AppError extends Component {
         <ErrorOutlineIcon className="error-icon" />
         <div className="error-message">
           There was an error loading the app. Try refreshing the page. If the
-          error persists,
-          {" "}
+          error persists,{" "}
           <span onClick={this.submitLogout} className="link">
             click here to logout
-          </span>
-          {" "}
+          </span>{" "}
           and then log back in. If the issue persists, contact the administrator
           at admin@resaleglobal.com.
         </div>

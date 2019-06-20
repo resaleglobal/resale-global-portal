@@ -1,6 +1,6 @@
 import { OVERRIDE_SHOW } from "./../../components/sidebar/Sidebar";
 
-export let adminLinks = [
+export const adminLinks = [
   {
     name: "dashboard",
     url: "/app/admin/dashboard",
