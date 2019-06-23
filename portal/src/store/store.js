@@ -9,6 +9,7 @@ import {
   createResellerSaga,
   createConsignorSaga
 } from "./accounts/UserAccountsSagas";
+import { fetchAdminUsersSaga } from "./admin/users/AdminUsersSaga";
 
 // create the saga middleware
 const sagaMiddleware = createSagaMiddleware();
@@ -26,5 +27,6 @@ sagaMiddleware.run(userSaga);
 sagaMiddleware.run(createResellerSaga);
 sagaMiddleware.run(createConsignorSaga);
 sagaMiddleware.run(logoutSaga);
+sagaMiddleware.run(fetchAdminUsersSaga);
 
 export default store;

@@ -5,6 +5,8 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import { fetchAdminUsers } from "../../../store/admin/users/AdminUsersActions";
+import { connect } from "react-redux";
 
 class AdminUsersPage extends Component {
   rows = [
@@ -31,7 +33,10 @@ class AdminUsersPage extends Component {
   render() {
     return (
       <Table>
-        <TableHead className="table-head">
+        <TableHead
+          className="table-head"
+          onClick={() => this.props.fetchAdminUsers()}
+        >
           <TableRow>
             <TableCell></TableCell>
             <TableCell>Name</TableCell>
@@ -64,4 +69,13 @@ class AdminUsersPage extends Component {
   }
 }
 
-export default AdminUsersPage;
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchAdminUsers: () => dispatch(fetchAdminUsers())
+  };
+};
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(AdminUsersPage);
