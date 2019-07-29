@@ -5,8 +5,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: resale_global_portal
+    image: trow.kube-public:31000/resale_global_portal
     stdin_open: true
     tty: true
     ports:
-      - "8080:8080"
+      - "80:80"

@@ -1,5 +1,6 @@
 import store from "./../store/store";
 import { submitLogout } from "../store/authorization/AuthActions";
+import Config from '../environments/Config';
 
 export const get = url => {
   return fetchBase(url, "GET", getAuthHeader());
@@ -44,7 +45,9 @@ const fetchBase = (url, method, headers = {}, params = null) => {
     };
   }
 
-  return fetch(`http://localhost:8000${url}`, content).then(response => {
+  const base = Config.api
+
+  return fetch(`${base}${url}`, content).then(response => {
     if (!response.ok) {
       switch (response.status) {
         case 401:
@@ -52,6 +55,8 @@ const fetchBase = (url, method, headers = {}, params = null) => {
             return store.dispatch(submitLogout());
           }
           break;
+        case 405:
+          throw new Error(response.statusText)
         default:
           break;
       }

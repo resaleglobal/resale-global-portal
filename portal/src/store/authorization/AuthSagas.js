@@ -56,3 +56,81 @@ function* submitLogout(_) {
 export function* logoutSaga() {
   yield takeLatest("SUBMIT_LOGOUT", submitLogout);
 }
+
+
+
+const createShopifyUser = params => {
+  return postNonAuth("/account/v1/shopify-create", params).then(response => {
+    return response.json();
+  });
+};
+
+function* submitCreateShopifyUser(action) {
+  try {
+    const resp = yield call(createShopifyUser, action.payload.params);
+    yield put(loginSuccess(resp.token));
+  } catch (e) {
+    yield put(loginError(e.message));
+  }
+}
+
+export function* createShopifyUserSaga() {
+  yield takeLatest("SUBMIT_CREATE_SHOPIFY_USER", submitCreateShopifyUser);
+}
+
+const fetchRegister = params => {
+  return postNonAuth("/account/v1/register-invited-user", params).then(response => {
+    if (!response.ok) {
+      switch (response.status) {
+        case 401:
+          throw new Error("Invalid credentials provided.");
+        default:
+          throw new Error("Something bad happened!");
+      }
+    }
+
+    return response.json();
+  });
+};
+
+function* registerInvitedUser(action) {
+  try {
+    const resp = yield call(fetchRegister, action.payload.params);
+    yield put(loginSuccess(resp.token));
+  } catch (e) {
+    yield put(loginError(e.message));
+  }
+}
+
+export function* registerInvitedUserSaga() {
+  yield takeLatest("SUBMIT_REGISTER_INVITED_USER", registerInvitedUser);
+}
+
+const fetchRegisterConsignor = params => {
+  return postNonAuth("/account/v1/register-invited-consignor", params).then(response => {
+    if (!response.ok) {
+      switch (response.status) {
+        case 401:
+          throw new Error("Invalid credentials provided.");
+        default:
+          throw new Error("Something bad happened!");
+      }
+    }
+
+    return response.json();
+  });
+};
+
+function* registerInvitedConsignor(action) {
+  try {
+    const resp = yield call(fetchRegisterConsignor, action.payload.params);
+    yield put(loginSuccess(resp.token));
+  } catch (e) {
+    yield put(loginError(e.message));
+  }
+}
+
+export function* registerInvitedConsignorSaga() {
+  yield takeLatest("SUBMIT_REGISTER_INVITED_CONSIGNOR", registerInvitedConsignor);
+}
+

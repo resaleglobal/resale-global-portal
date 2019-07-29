@@ -27,6 +27,9 @@ import AppLoader from "./components/app/AppLoader";
 import AppError from "./components/app/AppError";
 
 import AppSelectDomain from "./components/app/AppSelectDomain";
+import ShopifyCreateUser from "./pages/login/ShopifyCreateUser";
+import InviteUserPage from "./pages/login/InviteUserPage";
+import InviteConsignorPage from "./pages/login/InviteConsignorPage";
 
 export const protectedDomains = ["login", "create-account", "select-account"];
 
@@ -36,6 +39,9 @@ class App extends Component {
       <div className="App">
         <Switch>
           <Route exact path="/login" component={Login} />
+          <Route exact path="/shopify-create-user" component={ShopifyCreateUser} />
+          <Route exact path="/invite-user" component={InviteUserPage} />
+          <Route exact path="/invite-consignor" component={InviteConsignorPage} />
           <AuthAppBody {...this.props} />
         </Switch>
       </div>

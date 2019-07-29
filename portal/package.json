@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.0.2",
     "@material-ui/icons": "^4.1.0",
+    "material-ui-dropzone": "^2.4.0",
     "node-sass": "^4.12.0",
     "query-string": "^6.7.0",
     "react": "^16.8.5",
@@ -12,16 +13,19 @@
     "react-redux": "^7.0.3",
     "react-router-dom": "^5.0.0",
     "react-scripts": "^3.0.1",
+    "react-starter-app": "^1.1.1",
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.8",
     "redux-logger": "^3.0.6",
     "redux-mock-store": "^1.5.3",
     "redux-saga": "^1.0.2",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "typescript": "^3.5.3"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "REACT_APP_ENVIRONMENT=local react-scripts start",
+    "build:staging": "REACT_APP_ENVIRONMENT=staging react-scripts build",
+    "build:prod": "REACT_APP_ENVIRONMENT=production react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "format": "prettier --write 'src/**/*.js'"

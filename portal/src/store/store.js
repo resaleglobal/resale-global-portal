@@ -3,13 +3,15 @@ import logger from "redux-logger";
 import { composeWithDevTools } from "redux-devtools-extension";
 import reducers from "./reducers";
 import createSagaMiddleware from "redux-saga";
-import { loginSaga, logoutSaga } from "./authorization/AuthSagas";
+import { loginSaga, logoutSaga, createShopifyUserSaga, registerInvitedUserSaga, registerInvitedConsignorSaga } from "./authorization/AuthSagas";
 import { userSaga } from "./user/UserSaga";
 import {
   createResellerSaga,
   createConsignorSaga
 } from "./accounts/UserAccountsSagas";
-import { fetchAdminUsersSaga } from "./admin/users/AdminUsersSaga";
+import { fetchAdminUsersSaga, inviteUserSaga } from "./admin/users/AdminUsersSaga";
+import { inviteConsignorSaga, fetchResellerConsignorsSaga } from "./reseller/consignors/RConsignorsSaga";
+import { fetchResellerItemsSaga, createResellerItemsSaga } from "./reseller/items/RItemsSaga"
 
 // create the saga middleware
 const sagaMiddleware = createSagaMiddleware();
@@ -28,5 +30,13 @@ sagaMiddleware.run(createResellerSaga);
 sagaMiddleware.run(createConsignorSaga);
 sagaMiddleware.run(logoutSaga);
 sagaMiddleware.run(fetchAdminUsersSaga);
+sagaMiddleware.run(createShopifyUserSaga)
+sagaMiddleware.run(inviteUserSaga)
+sagaMiddleware.run(inviteConsignorSaga)
+sagaMiddleware.run(fetchResellerConsignorsSaga);
+sagaMiddleware.run(registerInvitedUserSaga)
+sagaMiddleware.run(registerInvitedConsignorSaga)
+sagaMiddleware.run(fetchResellerItemsSaga);
+sagaMiddleware.run(createResellerItemsSaga)
 
 export default store;

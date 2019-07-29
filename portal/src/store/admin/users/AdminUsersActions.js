@@ -17,3 +17,30 @@ export const fetchUserError = error => {
     payload: { error }
   };
 };
+
+export const showInviteUser = () => {
+  return {
+    type: "SHOW_INVITE_USER",
+  };
+};
+
+export const submitInviteUser = (params) => {
+  return {
+    type: "SUBMIT_INVITE_USER",
+    payload: {params}
+  };
+};
+
+export const submitInviteUserSuccess = () => {
+  return {
+    type: "SUBMIT_INVITE_USER_SUCCESS",
+  };
+};
+
+export const submitInviteUserError = error => {
+  return {
+    type: "SUBMIT_INVITE_USER_ERROR",
+    payload: { error }
+  };
+};
+

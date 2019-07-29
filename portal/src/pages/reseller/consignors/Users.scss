@@ -1,0 +1,16 @@
+
+
+input {
+  height: 10px !important;
+}
+
+input[type=checkbox] {
+  height: 100% !important;
+}
+
+.login-loader {
+  position:relative;
+  top: 3px;
+  height: 13px !important;
+  width: 13px !important;
+}

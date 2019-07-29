@@ -29,20 +29,29 @@
   }
 }
 
-tbody {
-  tr {
-    td {
-      &.table-profile {
-        padding: 0px;
+a.MuiTableRow-root {
 
-        img {
-          position: relative;
-          top: 3px;
-          height: 35px;
-          width: 35px;
-          border-radius: 50%;
-        }
-      }
+  &:nth-child(even) {
+    background-color: #f4f4f4;
+  }
+
+  &:hover {
+    background-color:#edeffa;
+    cursor:pointer;
+  }
+}
+
+
+td {
+  &.table-profile {
+    padding: 0px;
+
+    img {
+      position: relative;
+      top: 3px;
+      height: 35px;
+      width: 35px;
+      border-radius: 50%;
     }
   }
 }
@@ -113,4 +122,18 @@ tbody {
     cursor: pointer;
     background-color: #f0f0f0;
   }
+}
+
+button.section-button, a.section-button {
+  margin-bottom: 20px;
+
+}
+
+
+// Dropzone
+
+.DropzoneArea-dropzoneParagraph-199 {
+  font-size: 24px;
+  color:#6a6a6a;
+  font-weight: 300;
 }

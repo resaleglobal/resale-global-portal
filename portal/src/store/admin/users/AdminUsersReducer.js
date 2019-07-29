@@ -2,7 +2,13 @@ export const initialAdminUsersState = {
   users: [],
   loading: false,
   hasError: false,
-  error: ""
+  error: "",
+  invite: {
+    loading: false,
+    hasError: false,
+    error: "",
+    show: false,
+  }
 };
 
 export default (state = initialAdminUsersState, action) => {
@@ -11,7 +17,7 @@ export default (state = initialAdminUsersState, action) => {
       return {
         ...state,
         users: [],
-        loadingUser: true,
+        loading: true,
         hasError: false,
         error: null
       };
@@ -20,16 +26,59 @@ export default (state = initialAdminUsersState, action) => {
       return {
         ...state,
         users: action.payload.users,
-        loadingUser: false,
+        loading: false,
         userLoaded: true
       };
 
     case "FETCH_ADMIN_USERS_ERROR":
       return {
         ...state,
-        loadingUser: false,
+        loading: false,
         hasError: true,
         error: action.payload.error
+      };
+
+    case "SHOW_INVITE_USER":
+        return {
+          ...state,
+          invite: {
+            ...state.invite,
+            show: true
+          }
+        };
+
+    case "SUBMIT_INVITE_USER":
+      return {
+        ...state,
+        invite: {
+          ...state.invite,
+          loading: true,
+          hasError: false,
+          error: null
+        }
+      };
+
+    case "SUBMIT_INVITE_USER_SUCCESS":
+      return {
+        ...state,
+        invite: {
+          ...state.invite,
+          loading: false,
+          hasError: false,
+          error: null,
+          show: false
+        }
+      };
+
+    case "SUBMIT_INVITE_USER_ERROR":
+      return {
+        ...state,
+        invite: {
+          ...state.invite,
+          loading: false,
+          hasError: true,
+          error: action.payload.error
+        }
       };
 
     default:

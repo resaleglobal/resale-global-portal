@@ -4,17 +4,29 @@ import AuthReducer, { initialAuthState } from "./authorization/AuthReducer";
 import UserAccountsReducer, {
   initialUserAccountState
 } from "./accounts/UserAccountsReducer";
+import AdminUsersReducer, {
+  initialAdminUsersState
+} from "./admin/users/AdminUsersReducer";
+import RConsignorsReducer, { initialResellerConsignorsState } from './reseller/consignors/RConsignorsReducer';
+import RItemsReducer, { initialResellerItemsState } from "./reseller/items/RItemsReducer";
+
 
 export const initialStoreState = {
   user: initialUserState,
   auth: initialAuthState,
-  userAccount: initialUserAccountState
+  userAccount: initialUserAccountState,
+  adminUsers: initialAdminUsersState,
+  rConsignors: initialResellerConsignorsState,
+  rItems: initialResellerItemsState
 };
 
 const appReducer = combineReducers({
   user: UserReducer,
   auth: AuthReducer,
-  userAccount: UserAccountsReducer
+  userAccount: UserAccountsReducer,
+  adminUsers: AdminUsersReducer,
+  rConsignors: RConsignorsReducer,
+  rItems: RItemsReducer
 });
 
 export default (state, action) => {

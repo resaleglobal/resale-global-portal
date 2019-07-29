@@ -1,0 +1,38 @@
+section {
+  padding: 20px 0px;
+
+  padding-top: 0px;
+  
+
+  h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #565656;
+    font-weight: normal;
+  }
+  .loader-container {
+    display: flex;
+    justify-content: center;
+    padding:20px;
+
+    .loader {
+      height: 50px !important;
+      width: 50px !important;
+    }
+  }
+  
+  button {
+    margin-bottom: 20px;
+  }
+
+  .error {
+    display: flex;
+    justify-content: center;
+    color: #c53b3b;
+    font-size: 24px;
+    background-color: #f9ecec;
+    padding: 30px;
+  }
+
+
+}
