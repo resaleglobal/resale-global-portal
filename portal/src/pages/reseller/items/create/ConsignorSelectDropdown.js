@@ -42,6 +42,7 @@ class ConsignorSelectDropdown extends Component {
         variant="outlined"
         fullWidth={true}
         error={error}
+        className="item-create"
       >
         <InputLabel htmlFor="consignor">Consignor</InputLabel>
         <Select

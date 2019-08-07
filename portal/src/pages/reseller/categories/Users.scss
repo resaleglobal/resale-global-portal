@@ -1,0 +1,27 @@
+input {
+  height: 10px !important;
+}
+
+input[type="checkbox"] {
+  height: 100% !important;
+}
+
+.login-loader {
+  position: relative;
+  top: 3px;
+  height: 13px !important;
+  width: 13px !important;
+}
+
+div.MuiFormControl-root {
+  margin-bottom: 0px;
+}
+
+div.attribute-badge {
+  padding: 5px 10px;
+  background-color: #3eb5db;
+  font-weight: bold;
+  color: white;
+  border-radius: 10px;
+  display: inline;
+}

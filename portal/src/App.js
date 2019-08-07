@@ -86,8 +86,24 @@ class AuthAppBody extends Component {
 
 class AppPageRoutes extends Component {
   render() {
+    console.log(this.props.domain)
     return (
       <Switch>
+        <Route
+          path="/:domain"
+          exact
+          render={routeProps =>
+            this.props.showAdmin ? (
+              <Redirect to={`/${this.props.domain}/admin`} />
+            ) : this.props.showReseller ? (
+              <Redirect to={`/${this.props.domain}/reseller`} />
+            ) : this.props.showConsignor ? (
+              <Redirect to={`/${this.props.domain}/consignor`} />
+            ) : this.props.showBuyer ? (
+              <Redirect to={`/${this.props.domain}/buyer`} />
+            ) : (null)
+          }
+        />
         <Route
           path="/:domain/admin"
           render={routeProps =>
@@ -134,6 +150,7 @@ class AppPageRoutes extends Component {
 }
 
 const mapStateToProps = state => ({
+  domain: state.userAccount.selected.domain,
   user: state.user,
   showAdmin: showAdmin(state),
   showConsignor: showConsignor(state),

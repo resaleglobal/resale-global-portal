@@ -5,7 +5,7 @@ RUN mkdir /var/www
 
 COPY portal/ ./portal
 
-RUN cd portal/ && rm -rf node_modules/ && npm install && npm run build:prod
+RUN cd portal/ && rm -rf node_modules/ && npm install && npm run build:prodommi
 RUN cp -rp ./portal/build/* /var/www/
 COPY nginx.conf /etc/nginx/nginx.conf
 

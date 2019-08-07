@@ -48,6 +48,7 @@ class GeneralSection extends Component {
           variant="outlined"
           fullWidth={true}
           error={titleError}
+          className="item-create"
         >
           <InputLabel htmlFor="title">Title</InputLabel>
           <OutlinedInput
@@ -66,6 +67,7 @@ class GeneralSection extends Component {
           variant="outlined"
           fullWidth={true}
           error={descriptionError}
+          className="item-create"
         >
           <InputLabel htmlFor="description">Description</InputLabel>
           <OutlinedInput

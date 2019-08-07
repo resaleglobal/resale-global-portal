@@ -15,7 +15,7 @@ class Section extends Component {
           </div>
         ) : hasError ? <div className='error'>{error}</div> : (
           <>
-            <h1>{title}</h1>
+            {title ? <h1>{title}</h1> : null}
             {this.props.children}
           </>
           )

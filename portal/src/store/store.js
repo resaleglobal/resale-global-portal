@@ -12,6 +12,10 @@ import {
 import { fetchAdminUsersSaga, inviteUserSaga } from "./admin/users/AdminUsersSaga";
 import { inviteConsignorSaga, fetchResellerConsignorsSaga } from "./reseller/consignors/RConsignorsSaga";
 import { fetchResellerItemsSaga, createResellerItemsSaga } from "./reseller/items/RItemsSaga"
+import rootResellerCategoriesSaga from "./reseller/categories/RCategoriesSaga";
+import rootResellerDepartmentsSaga from "./reseller/departments/RDepartmentsSaga";
+import rootResellerSectionsSaga from "./reseller/sections/RSectionsSaga";
+import rootResellerAttributesSaga from "./reseller/attributes/RAttributesSaga"
 
 // create the saga middleware
 const sagaMiddleware = createSagaMiddleware();
@@ -38,5 +42,9 @@ sagaMiddleware.run(registerInvitedUserSaga)
 sagaMiddleware.run(registerInvitedConsignorSaga)
 sagaMiddleware.run(fetchResellerItemsSaga);
 sagaMiddleware.run(createResellerItemsSaga)
+sagaMiddleware.run(rootResellerCategoriesSaga)
+sagaMiddleware.run(rootResellerDepartmentsSaga)
+sagaMiddleware.run(rootResellerSectionsSaga)
+sagaMiddleware.run(rootResellerAttributesSaga)
 
 export default store;

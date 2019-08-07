@@ -9,6 +9,10 @@ import AdminUsersReducer, {
 } from "./admin/users/AdminUsersReducer";
 import RConsignorsReducer, { initialResellerConsignorsState } from './reseller/consignors/RConsignorsReducer';
 import RItemsReducer, { initialResellerItemsState } from "./reseller/items/RItemsReducer";
+import RCategoriesReducer, {initialResellerCategoriesState} from "./reseller/categories/RCategoriesReducer";
+import RDepartmentsReducer, { initialResellerDepartmentsState } from './reseller/departments/RDepartmentsReducer';
+import RSectionsReducer, { initialResellerSectionsState } from "./reseller/sections/RSectionsReducer";
+import RAttributesReducer, { initialResellerAttributesState } from "./reseller/attributes/RAttributesReducer";
 
 
 export const initialStoreState = {
@@ -17,7 +21,11 @@ export const initialStoreState = {
   userAccount: initialUserAccountState,
   adminUsers: initialAdminUsersState,
   rConsignors: initialResellerConsignorsState,
-  rItems: initialResellerItemsState
+  rItems: initialResellerItemsState,
+  rCategories: initialResellerCategoriesState,
+  rDepartments: initialResellerDepartmentsState,
+  rSections:initialResellerSectionsState,
+  rAttributes: initialResellerAttributesState
 };
 
 const appReducer = combineReducers({
@@ -26,7 +34,11 @@ const appReducer = combineReducers({
   userAccount: UserAccountsReducer,
   adminUsers: AdminUsersReducer,
   rConsignors: RConsignorsReducer,
-  rItems: RItemsReducer
+  rItems: RItemsReducer,
+  rCategories: RCategoriesReducer,
+  rDepartments: RDepartmentsReducer,
+  rSections: RSectionsReducer,
+  rAttributes: RAttributesReducer
 });
 
 export default (state, action) => {
