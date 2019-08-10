@@ -2,14 +2,11 @@ div.MuiFormControl-root.item-create {
   margin-bottom: 20px;
 }
 
-
-
 button.submit-button {
   margin: 30px 0px;
 }
 
 .dropzone {
-
   div.MuiGrid-root.MuiGrid-container {
     margin: 20px 0px;
 
@@ -46,4 +43,16 @@ button.submit-button {
   div.MuiGrid-root.MuiGrid-container {
     margin: 20px 0px;
   }
+}
+
+.select {
+  margin-bottom: 20px;
+}
+
+.attributes-message {
+  text-align: center;
+}
+
+.capitalize {
+  text-transform: capitalize;
 }

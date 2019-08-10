@@ -3,13 +3,13 @@ export const initialResellerDepartmentsState = {
     departments: [],
     loading: false,
     hasError: false,
-    error: "",
+    error: ""
   },
   create: {
     show: false,
     loading: false,
     hasError: false,
-    error: "",
+    error: ""
   }
 };
 
@@ -35,7 +35,7 @@ export default (state = initialResellerDepartmentsState, action) => {
           departments: action.payload.departments,
           loading: false,
           userLoaded: true
-        },
+        }
       };
 
     case "FETCH_RESELLER_DEPARTMENTS_ERROR":
@@ -46,7 +46,7 @@ export default (state = initialResellerDepartmentsState, action) => {
           loading: false,
           hasError: true,
           error: action.payload.error
-        },
+        }
       };
 
     case "SHOW_RESELLER_DEPARTMENTS":
@@ -84,9 +84,8 @@ export default (state = initialResellerDepartmentsState, action) => {
         create: {
           ...state.create,
           show: false,
-          loading: false,
-          userLoaded: true
-        },
+          loading: false
+        }
       };
 
     case "CREATE_RESELLER_DEPARTMENTS_ERROR":
@@ -97,7 +96,7 @@ export default (state = initialResellerDepartmentsState, action) => {
           loading: false,
           hasError: true,
           error: action.payload.error
-        },
+        }
       };
 
     default:
