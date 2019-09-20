@@ -23,7 +23,8 @@ export const initialResellerCategoriesState = {
     loading: false,
     hasError: false,
     error: ""
-  }
+  },
+  select: []
 };
 
 export default (state = initialResellerCategoriesState, action) => {
@@ -178,6 +179,52 @@ export default (state = initialResellerCategoriesState, action) => {
           hasError: true,
           error: action.payload.error
         }
+      };
+
+    case "SELECT_RESELLER_CATEGORIES":
+      return {
+        ...state,
+        select: [
+          // If an error state exists, clear it out.
+          ...state.select.filter(s => s.id !== action.payload.params.id),
+          {
+            id: action.payload.params.id,
+            loading: true,
+            hasError: false,
+            error: null
+          }
+        ]
+      };
+
+    case "SELECT_RESELLER_CATEGORIES_SUCCESS":
+      return {
+        ...state,
+        select: state.select.filter(s => s.id !== action.payload.params.id),
+        all: {
+          ...state.all,
+          categories: state.all.categories.map(cat => {
+            if (cat.id === action.payload.params.id) {
+              cat.selected = action.payload.params.selected;
+            }
+            return cat;
+          })
+        }
+      };
+
+    case "SELECT_RESELLER_CATEGORIES_ERROR":
+      return {
+        ...state,
+        select: state.select.map(s => {
+          if (s.id === action.payload.params.id) {
+            s = {
+              ...s,
+              loading: false,
+              hasError: true,
+              error: action.payload.error
+            };
+          }
+          return s;
+        })
       };
 
     default:

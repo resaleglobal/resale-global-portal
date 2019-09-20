@@ -17,8 +17,8 @@ class GeneralSection extends Component {
       description: "",
       consignorId: "",
       price: "",
-      weight: "",
-      quantity: ""
+      weight: 1,
+      quantity: 1
     };
   }
 
@@ -76,6 +76,7 @@ class GeneralSection extends Component {
           ></OutlinedInput>
         </FormControl>
         <ConsignorSelectDropdown
+          location={this.props.location}
           selectedConsignorIdCallback={this.selectedConsignorIdCallback}
         ></ConsignorSelectDropdown>
         <FormControl

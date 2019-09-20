@@ -9,6 +9,7 @@ import TableRow from "@material-ui/core/TableRow";
 import { Button } from "@material-ui/core";
 import { NavLink } from "react-router-dom";
 import { fetchResellerItems } from "../../../store/reseller/items/RItemsActions";
+import Searchbox from "../../../components/searchbox/Searchbox";
 
 class ItemsList extends Component {
   constructor(props) {
@@ -33,6 +34,15 @@ class ItemsList extends Component {
     });
   };
 
+  handleSearch = value => {
+    this.setState(
+      {
+        searchFilter: value
+      },
+      () => this.getItems()
+    );
+  };
+
   render() {
     const { items, loading, hasError, error } = this.props;
     return (
@@ -42,7 +52,10 @@ class ItemsList extends Component {
             Create Item
           </Button>
         </NavLink>
-        <Table>
+        <div className="search-box">
+          <Searchbox handleChange={this.handleSearch} />
+        </div>
+        <Table style={{ tableLayout: "fixed" }}>
           <TableHead className="table-head">
             <TableRow>
               <TableCell>Title</TableCell>
@@ -53,28 +66,6 @@ class ItemsList extends Component {
               <TableCell></TableCell>
             </TableRow>
           </TableHead>
-          {loading || hasError ? (
-            <></>
-          ) : (
-            <TableBody>
-              {items.map(row => (
-                <TableRow
-                  component={NavLink}
-                  to={`items/${row.id}`}
-                  key={row.id}
-                >
-                  <TableCell>{row.title}</TableCell>
-                  <TableCell>{row.status}</TableCell>
-                  <TableCell>{row.price}</TableCell>
-                  <TableCell>{row.startTime}</TableCell>
-                  <TableCell>
-                    {row.category ? row.category.displayName : ""}
-                  </TableCell>
-                  <TableCell></TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          )}
         </Table>
         {loading || hasError ? (
           <Section
@@ -85,6 +76,32 @@ class ItemsList extends Component {
         ) : (
           <></>
         )}
+        <div style={{ overflow: "auto", height: "500px" }}>
+          <Table style={{ tableLayout: "fixed" }}>
+            {loading || hasError ? (
+              <></>
+            ) : (
+              <TableBody>
+                {items.map(row => (
+                  <TableRow
+                    component={NavLink}
+                    to={`items/single/${row.id}`}
+                    key={row.id}
+                  >
+                    <TableCell>{row.title}</TableCell>
+                    <TableCell>{row.status}</TableCell>
+                    <TableCell>{row.price}</TableCell>
+                    <TableCell>{row.startTime}</TableCell>
+                    <TableCell>
+                      {row.category ? row.category.displayName : ""}
+                    </TableCell>
+                    <TableCell></TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            )}
+          </Table>
+        </div>
       </Section>
     );
   }

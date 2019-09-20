@@ -1,16 +1,19 @@
 import { Component } from "react";
 import React from "react";
 import { connect } from "react-redux";
-import { createResellerSections } from "../../../store/reseller/sections/RSectionsActions";
+import {
+  createResellerSections,
+  hideResellerSections
+} from "../../../store/reseller/sections/RSectionsActions";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import "./Users.scss"
+import "./Users.scss";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import InputLabel from "@material-ui/core/InputLabel";
 import Button from "@material-ui/core/Button";
 import FormControl from "@material-ui/core/FormControl";
-import Checkbox from "@material-ui/core/Checkbox"
+import Checkbox from "@material-ui/core/Checkbox";
 import DepartmentDropdown from "./DepartmentDropdown";
 
 class CreateSectionsRow extends Component {
@@ -23,22 +26,21 @@ class CreateSectionsRow extends Component {
       section: "",
       sectionError: false,
       departmentError: false,
-      selectedError: false,
+      selectedError: false
     };
   }
 
   handleSubmit = () => {
     this.setState({
       departmentError: false,
-      selectedError: false,
+      selectedError: false
     });
 
-    console.log(this.state)
+    console.log(this.state);
 
     let pass = true;
 
     if (!this.state.departmentId) {
-      
       this.setState({
         departmentError: true
       });
@@ -47,7 +49,6 @@ class CreateSectionsRow extends Component {
     }
 
     if (!this.state.section) {
-      
       this.setState({
         sectionError: true
       });
@@ -59,7 +60,7 @@ class CreateSectionsRow extends Component {
       this.props.createResellerSections({
         departmentId: this.state.departmentId,
         sectionName: this.state.section,
-        selected: this.state.selected,
+        selected: this.state.selected
       });
     }
   };
@@ -82,22 +83,28 @@ class CreateSectionsRow extends Component {
   callBackSelectedDropdown = selected => {
     this.setState({
       departmentId: selected
-    })
-  }
+    });
+  };
+
+  handleCancel = () => {
+    this.props.hideResellerSections();
+  };
 
   render() {
-
     const { loading } = this.props;
-    const { department, selected, section, departmentError, selectedError, sectionError} = this.state
+    const {
+      department,
+      selected,
+      section,
+      departmentError,
+      selectedError,
+      sectionError
+    } = this.state;
 
     return (
       <TableRow key="add-row">
-        <TableCell align="center">
-          <FormControl
-            required={true}
-            variant="outlined"
-            error={selectedError}
-          >
+        <TableCell>
+          <FormControl required={true} variant="outlined" error={selectedError}>
             <Checkbox
               id="selected"
               color="primary"
@@ -108,7 +115,9 @@ class CreateSectionsRow extends Component {
           </FormControl>
         </TableCell>
         <TableCell>
-          <DepartmentDropdown callBackSelectedDropdown={this.callBackSelectedDropdown}></DepartmentDropdown>
+          <DepartmentDropdown
+            callBackSelectedDropdown={this.callBackSelectedDropdown}
+          ></DepartmentDropdown>
         </TableCell>
         <TableCell>
           <FormControl
@@ -135,12 +144,18 @@ class CreateSectionsRow extends Component {
             variant="outlined"
             onClick={this.handleSubmit}
             disabled={loading}
-            >
-              {loading ? (
-                <CircularProgress className="login-loader" />
-              ) : (
-                "Submit"
-              )}</Button>
+          >
+            {loading ? <CircularProgress className="login-loader" /> : "Submit"}
+          </Button>
+        </TableCell>
+        <TableCell>
+          <Button
+            color="secondary"
+            variant="outlined"
+            onClick={this.handleCancel}
+          >
+            Cancel
+          </Button>
         </TableCell>
       </TableRow>
     );
@@ -150,13 +165,14 @@ class CreateSectionsRow extends Component {
 const mapDispatchToProps = dispatch => {
   return {
     createResellerSections: params => dispatch(createResellerSections(params)),
+    hideResellerSections: () => dispatch(hideResellerSections())
   };
 };
 
 const mapStateToProps = state => ({
   loading: state.rSections.create.loading,
   hasError: state.rSections.create.hasError,
-  error: state.rSections.create.error,
+  error: state.rSections.create.error
 });
 
 export default connect(

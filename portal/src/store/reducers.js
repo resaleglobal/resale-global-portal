@@ -7,13 +7,30 @@ import UserAccountsReducer, {
 import AdminUsersReducer, {
   initialAdminUsersState
 } from "./admin/users/AdminUsersReducer";
-import RConsignorsReducer, { initialResellerConsignorsState } from './reseller/consignors/RConsignorsReducer';
-import RItemsReducer, { initialResellerItemsState } from "./reseller/items/RItemsReducer";
-import RCategoriesReducer, {initialResellerCategoriesState} from "./reseller/categories/RCategoriesReducer";
-import RDepartmentsReducer, { initialResellerDepartmentsState } from './reseller/departments/RDepartmentsReducer';
-import RSectionsReducer, { initialResellerSectionsState } from "./reseller/sections/RSectionsReducer";
-import RAttributesReducer, { initialResellerAttributesState } from "./reseller/attributes/RAttributesReducer";
-
+import RConsignorsReducer, {
+  initialResellerConsignorsState
+} from "./reseller/consignors/RConsignorsReducer";
+import RItemsReducer, {
+  initialResellerItemsState
+} from "./reseller/items/RItemsReducer";
+import RCategoriesReducer, {
+  initialResellerCategoriesState
+} from "./reseller/categories/RCategoriesReducer";
+import RDepartmentsReducer, {
+  initialResellerDepartmentsState
+} from "./reseller/departments/RDepartmentsReducer";
+import RSectionsReducer, {
+  initialResellerSectionsState
+} from "./reseller/sections/RSectionsReducer";
+import RAttributesReducer, {
+  initialResellerAttributesState
+} from "./reseller/attributes/RAttributesReducer";
+import RSingleItemReducer, {
+  initialResellerSingleItemState
+} from "./reseller/single-item/RSingleItemReducer";
+import RSingleConsignorReducer, {
+  initialResellerSingleConsignorState
+} from "./reseller/single-consignor/RSingleConsignorReducer";
 
 export const initialStoreState = {
   user: initialUserState,
@@ -22,10 +39,12 @@ export const initialStoreState = {
   adminUsers: initialAdminUsersState,
   rConsignors: initialResellerConsignorsState,
   rItems: initialResellerItemsState,
+  rSingleItem: initialResellerSingleItemState,
   rCategories: initialResellerCategoriesState,
   rDepartments: initialResellerDepartmentsState,
-  rSections:initialResellerSectionsState,
-  rAttributes: initialResellerAttributesState
+  rSections: initialResellerSectionsState,
+  rAttributes: initialResellerAttributesState,
+  rSingleConsignor: initialResellerSingleConsignorState
 };
 
 const appReducer = combineReducers({
@@ -34,7 +53,9 @@ const appReducer = combineReducers({
   userAccount: UserAccountsReducer,
   adminUsers: AdminUsersReducer,
   rConsignors: RConsignorsReducer,
+  rSingleConsignor: RSingleConsignorReducer,
   rItems: RItemsReducer,
+  rSingleItem: RSingleItemReducer,
   rCategories: RCategoriesReducer,
   rDepartments: RDepartmentsReducer,
   rSections: RSectionsReducer,

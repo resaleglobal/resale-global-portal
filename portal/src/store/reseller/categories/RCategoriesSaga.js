@@ -4,6 +4,7 @@ import { select } from "redux-saga/effects";
 import { get, post } from "../../../utils/RestUtils";
 import { accountId } from "./RCategoriesSelectors";
 import {
+  fetchResellerCategories,
   fetchCategoriesSuccess,
   fetchCategoriesError,
   createCategoriesSuccess,
@@ -11,16 +12,26 @@ import {
   fetchSelectedCategoriesSuccess,
   fetchSelectedCategoriesError,
   fetchSelectedAttributesSuccess,
-  fetchSelectedAttributesError
+  fetchSelectedAttributesError,
+  selectCategoriesSuccess,
+  selectCategoriesError
 } from "./RCategoriesActions";
 
 function fetchCategories(params) {
-  return get(`/reseller/v1/${params.accountId}/categories`).then(response => {
-    return response.json();
-  });
+  let paramString = "";
+
+  if (params.searchFilter) {
+    paramString = `?searchFilter=${params.searchFilter}`;
+  }
+
+  return get(`/reseller/v1/${params.accountId}/categories${paramString}`).then(
+    response => {
+      return response.json();
+    }
+  );
 }
 
-function* fetchResellerCategories(action) {
+function* fetchResellerCategoriesStep(action) {
   try {
     const id = yield select(accountId);
     let params = {};
@@ -34,11 +45,7 @@ function* fetchResellerCategories(action) {
 }
 
 function* fetchResellerCategoriesSaga() {
-  yield takeLatest("FETCH_RESELLER_CATEGORIES", fetchResellerCategories);
-  yield takeLatest(
-    "CREATE_RESELLER_CATEGORIES_SUCCESS",
-    fetchResellerCategories
-  );
+  yield takeLatest("FETCH_RESELLER_CATEGORIES", fetchResellerCategoriesStep);
 }
 
 function fetchSelectedCategories(params) {
@@ -79,7 +86,6 @@ function* fetchResellerAttributesCategories(action) {
   try {
     const id = yield select(accountId);
     const params = { ...action.payload, accountId: id };
-    console.log("params", params, action);
     const data = yield call(fetchAttributes, params);
     yield put(fetchSelectedAttributesSuccess(data));
   } catch (e) {
@@ -108,6 +114,7 @@ function* createResellerCategories(action) {
     const params = { ...action.payload.params, accountId: id };
     yield call(createCategories, params);
     yield put(createCategoriesSuccess());
+    yield put(fetchResellerCategories({}));
   } catch (e) {
     yield put(createCategoriesError(e.message));
   }
@@ -117,11 +124,33 @@ function* createResellerCategoriesSaga() {
   yield takeLatest("CREATE_RESELLER_CATEGORIES", createResellerCategories);
 }
 
+function selectCategories(params) {
+  return post(`/reseller/v1/${params.accountId}/categories/select`, params);
+}
+
+function* selectResellerCategories(action) {
+  try {
+    const id = yield select(accountId);
+    let params = {};
+    if (action.payload) params = action.payload.params;
+    params = { ...params, accountId: id };
+    yield call(selectCategories, params);
+    yield put(selectCategoriesSuccess(params));
+  } catch (e) {
+    yield put(selectCategoriesError(e.message, action.payload.params));
+  }
+}
+
+function* selectResellerCategoriesSaga() {
+  yield takeLatest("SELECT_RESELLER_CATEGORIES", selectResellerCategories);
+}
+
 export default function* rootResellerCategoriesSaga() {
   yield all([
     fetchResellerCategoriesSaga(),
     fetchResellerSelectedCategoriesSaga(),
     createResellerCategoriesSaga(),
-    fetchResellerSelectedAttributesSaga()
+    fetchResellerSelectedAttributesSaga(),
+    selectResellerCategoriesSaga()
   ]);
 }

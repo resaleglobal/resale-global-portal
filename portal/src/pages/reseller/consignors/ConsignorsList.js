@@ -7,18 +7,43 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import { Button } from "@material-ui/core";
-import InviteConsignorRow from './InviteConsignors';
-import { fetchResellerConsignors, showInviteConsignor } from '../../../store/reseller/consignors/RConsignorsActions';
-import { NavLink } from 'react-router-dom';
+import InviteConsignorRow from "./InviteConsignors";
+import {
+  fetchResellerConsignors,
+  showInviteConsignor
+} from "../../../store/reseller/consignors/RConsignorsActions";
+import { NavLink } from "react-router-dom";
+import Searchbox from "../../../components/searchbox/Searchbox";
 
 class ConsignorsList extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      searchFilter: ""
+    };
+  }
+
   componentDidMount() {
-    this.props.fetchResellerConsignors();
+    this.fetch(this.state);
   }
 
   showAddRow = () => {
-    this.props.showInviteConsignor()
-  }
+    this.props.showInviteConsignor();
+  };
+
+  handleSearch = value => {
+    this.setState(
+      {
+        searchFilter: value
+      },
+      () => this.fetch(this.state)
+    );
+  };
+
+  fetch = params => {
+    this.props.fetchResellerConsignors(params);
+  };
 
   render() {
     const { consignors, loading, showInvite, hasError, error } = this.props;
@@ -29,7 +54,12 @@ class ConsignorsList extends Component {
           variant="outlined"
           className="section-button"
           onClick={() => this.showAddRow()}
-        >Invite Consignor</Button>
+        >
+          Invite Consignor
+        </Button>
+        <div className="search-box">
+          <Searchbox handleChange={this.handleSearch} />
+        </div>
         <Table>
           <TableHead className="table-head">
             <TableRow>
@@ -42,32 +72,47 @@ class ConsignorsList extends Component {
               <TableCell></TableCell>
             </TableRow>
           </TableHead>
-          { loading || hasError ? <></> :
-          <TableBody>
-            {showInvite ? <InviteConsignorRow></InviteConsignorRow> : null }
-            {consignors.map(row => (
-              <TableRow component={NavLink} to={`consignors/${row.id}`}key={row.id}>
-                <TableCell align="center" className="table-profile">
-                  {row.avatar ? (
-                    <img src={row.avatar} alt="profile"></img>
-                  ) : (
-                    <img
-                      src="https://i.stack.imgur.com/34AD2.jpg"
-                      alt="profile"
-                    ></img>
-                  )}
-                </TableCell>
-                <TableCell>{row.name}</TableCell>
-                <TableCell>{row.firstName}</TableCell>
-                <TableCell>{row.lastName}</TableCell>
-                <TableCell>{row.email}</TableCell>
-                <TableCell>{row.number}</TableCell>
-                <TableCell></TableCell>
-              </TableRow>
-            ))}
-          </TableBody> }
+          {loading || hasError ? (
+            <></>
+          ) : (
+            <TableBody>
+              {showInvite ? <InviteConsignorRow></InviteConsignorRow> : null}
+              {consignors.map(row => (
+                <TableRow
+                  component={NavLink}
+                  to={`consignors/${row.id}`}
+                  key={row.id}
+                >
+                  <TableCell align="center" className="table-profile">
+                    {row.avatar ? (
+                      <img src={row.avatar} alt="profile"></img>
+                    ) : (
+                      <img
+                        src="https://i.stack.imgur.com/34AD2.jpg"
+                        alt="profile"
+                      ></img>
+                    )}
+                  </TableCell>
+                  <TableCell>{row.name}</TableCell>
+                  <TableCell>{row.firstName}</TableCell>
+                  <TableCell>{row.lastName}</TableCell>
+                  <TableCell>{row.email}</TableCell>
+                  <TableCell>{row.number}</TableCell>
+                  <TableCell></TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          )}
         </Table>
-        { loading || hasError ? <Section loading={loading} hasError={hasError} error={error}></Section> : <></> }
+        {loading || hasError ? (
+          <Section
+            loading={loading}
+            hasError={hasError}
+            error={error}
+          ></Section>
+        ) : (
+          <></>
+        )}
       </Section>
     );
   }
@@ -75,8 +120,9 @@ class ConsignorsList extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchResellerConsignors: () => dispatch(fetchResellerConsignors()),
-    showInviteConsignor: () => dispatch(showInviteConsignor()),
+    fetchResellerConsignors: params =>
+      dispatch(fetchResellerConsignors(params)),
+    showInviteConsignor: () => dispatch(showInviteConsignor())
   };
 };
 

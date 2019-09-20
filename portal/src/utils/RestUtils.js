@@ -1,6 +1,6 @@
 import store from "./../store/store";
 import { submitLogout } from "../store/authorization/AuthActions";
-import Config from '../environments/Config';
+import Config from "../environments/Config";
 
 export const get = url => {
   return fetchBase(url, "GET", getAuthHeader());
@@ -33,19 +33,30 @@ const fetchBase = (url, method, headers = {}, params = null) => {
     cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
     credentials: "same-origin", // include, *same-origin, omit
     headers: {
-      "Content-Type": "application/json",
       ...headers
     }
   };
 
   if (params) {
-    content = {
-      ...content,
-      body: JSON.stringify(params)
-    };
+    if (params instanceof FormData) {
+      console.log("is formdata!");
+      content = {
+        ...content,
+        body: params
+      };
+    } else {
+      content = {
+        ...content,
+        headers: {
+          ...content.headers,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(params)
+      };
+    }
   }
 
-  const base = Config.api
+  const base = Config.api;
 
   return fetch(`${base}${url}`, content).then(response => {
     if (!response.ok) {
@@ -56,7 +67,7 @@ const fetchBase = (url, method, headers = {}, params = null) => {
           }
           break;
         case 405:
-          throw new Error(response.statusText)
+          throw new Error(response.statusText);
         default:
           break;
       }

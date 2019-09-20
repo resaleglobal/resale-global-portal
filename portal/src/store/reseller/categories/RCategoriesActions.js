@@ -92,3 +92,24 @@ export const fetchSelectedAttributesError = error => {
     payload: { error }
   };
 };
+
+export const selectResellerCategories = params => {
+  return {
+    type: "SELECT_RESELLER_CATEGORIES",
+    payload: { params }
+  };
+};
+
+export const selectCategoriesSuccess = params => {
+  return {
+    type: "SELECT_RESELLER_CATEGORIES_SUCCESS",
+    payload: { params }
+  };
+};
+
+export const selectCategoriesError = (error, params) => {
+  return {
+    type: "SELECT_RESELLER_CATEGORIES_ERROR",
+    payload: { error, params }
+  };
+};

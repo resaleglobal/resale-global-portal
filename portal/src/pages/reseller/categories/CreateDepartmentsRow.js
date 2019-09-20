@@ -1,16 +1,19 @@
 import { Component } from "react";
 import React from "react";
 import { connect } from "react-redux";
-import { createResellerDepartments } from "../../../store/reseller/departments/RDepartmentsActions";
+import {
+  createResellerDepartments,
+  hideResellerDepartments
+} from "../../../store/reseller/departments/RDepartmentsActions";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import "./Users.scss"
+import "./Users.scss";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import InputLabel from "@material-ui/core/InputLabel";
 import Button from "@material-ui/core/Button";
 import FormControl from "@material-ui/core/FormControl";
-import Checkbox from "@material-ui/core/Checkbox"
+import Checkbox from "@material-ui/core/Checkbox";
 
 class CreateDepartmentsRow extends Component {
   constructor(props) {
@@ -20,20 +23,19 @@ class CreateDepartmentsRow extends Component {
       department: "",
       selected: true,
       departmentError: false,
-      selectedError: false,
+      selectedError: false
     };
   }
 
   handleSubmit = () => {
     this.setState({
       departmentError: false,
-      selectedError: false,
+      selectedError: false
     });
 
     let pass = true;
 
     if (!this.state.department) {
-      
       this.setState({
         departmentError: true
       });
@@ -44,7 +46,7 @@ class CreateDepartmentsRow extends Component {
     if (pass) {
       this.props.createResellerDepartments({
         departmentName: this.state.department,
-        selected: this.state.selected,
+        selected: this.state.selected
       });
     }
   };
@@ -67,22 +69,21 @@ class CreateDepartmentsRow extends Component {
   callBackSelectedDropdown = selected => {
     this.setState({
       departmentId: selected
-    })
-  }
+    });
+  };
+
+  handleCancel = () => {
+    this.props.hideResellerDepartments();
+  };
 
   render() {
-
     const { loading } = this.props;
-    const { department, selected, departmentError, selectedError,} = this.state
+    const { department, selected, departmentError, selectedError } = this.state;
 
     return (
       <TableRow key="add-row">
-        <TableCell align="center">
-          <FormControl
-            required={true}
-            variant="outlined"
-            error={selectedError}
-          >
+        <TableCell>
+          <FormControl required={true} variant="outlined" error={selectedError}>
             <Checkbox
               id="selected"
               color="primary"
@@ -117,12 +118,18 @@ class CreateDepartmentsRow extends Component {
             variant="outlined"
             onClick={this.handleSubmit}
             disabled={loading}
-            >
-              {loading ? (
-                <CircularProgress className="login-loader" />
-              ) : (
-                "Submit"
-              )}</Button>
+          >
+            {loading ? <CircularProgress className="login-loader" /> : "Submit"}
+          </Button>
+        </TableCell>
+        <TableCell>
+          <Button
+            color="secondary"
+            variant="outlined"
+            onClick={this.handleCancel}
+          >
+            Cancel
+          </Button>
         </TableCell>
       </TableRow>
     );
@@ -131,14 +138,16 @@ class CreateDepartmentsRow extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    createResellerDepartments: params => dispatch(createResellerDepartments(params)),
+    createResellerDepartments: params =>
+      dispatch(createResellerDepartments(params)),
+    hideResellerDepartments: () => dispatch(hideResellerDepartments())
   };
 };
 
 const mapStateToProps = state => ({
   loading: state.rDepartments.create.loading,
   hasError: state.rDepartments.create.hasError,
-  error: state.rDepartments.create.error,
+  error: state.rDepartments.create.error
 });
 
 export default connect(

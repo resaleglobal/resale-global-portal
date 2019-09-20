@@ -7,11 +7,11 @@ import AdminUsersPage from "../../pages/admin/users/AdminUsersPage";
 import AdminSingleUsersPage from "../../pages/admin/users/AdminSingleUsersPage";
 import BuyerHistoryPage from "../../pages/buyer/history/BuyerHistoryPage";
 import ResellerConsignorsPage from "../../pages/reseller/consignors/ResellerConsignorsPage";
-import ResellerConsignorsSinglePage from '../../pages/reseller/consignors/ResellerConsignorsSinglePage';
-import ResellerItemsPage from '../../pages/reseller/items/ResellerItemsPage';
-import ResellerItemsSinglePage from '../../pages/reseller/items/ResellerItemsSinglePage';
-import ResellerCategoriesPage from '../../pages/reseller/categories/ResellerCategoriesPage';
-import CreateItemsPage from '../../pages/reseller/items/CreateItemsPage';
+import ResellerConsignorsSinglePage from "../../pages/reseller/consignors/ResellerConsignorsSinglePage";
+import ResellerItemsPage from "../../pages/reseller/items/ResellerItemsPage";
+import ResellerItemsSinglePage from "../../pages/reseller/items/ResellerItemsSinglePage";
+import ResellerCategoriesPage from "../../pages/reseller/categories/ResellerCategoriesPage";
+import CreateItemsPage from "../../pages/reseller/items/CreateItemsPage";
 
 class Content extends Component {
   render() {
@@ -55,17 +55,45 @@ class Content extends Component {
 
           {/* Routes for admin */}
           <Route exact path="/:domain/admin/users" component={AdminUsersPage} />
-          <Route exact path="/:domain/admin/users/:userId" component={AdminSingleUsersPage} />
+          <Route
+            exact
+            path="/:domain/admin/users/:userId"
+            component={AdminSingleUsersPage}
+          />
 
           {/* Routes for reseller */}
-          <Route exact path="/:domain/reseller/consignors" component={ResellerConsignorsPage} />
-          <Route exact path="/:domain/reseller/consignors/:consignorId" component={ResellerConsignorsSinglePage} />
+          <Route
+            exact
+            path="/:domain/reseller/consignors"
+            component={ResellerConsignorsPage}
+          />
+          <Route
+            exact
+            path="/:domain/reseller/consignors/:consignorId"
+            component={ResellerConsignorsSinglePage}
+          />
 
-          <Route exact path="/:domain/reseller/categories" component={ResellerCategoriesPage} />
+          <Route
+            exact
+            path="/:domain/reseller/categories"
+            component={ResellerCategoriesPage}
+          />
 
-          <Route exact path="/:domain/reseller/items" component={ResellerItemsPage} />
-          <Route exact path="/:domain/reseller/items/create" component={CreateItemsPage} />
-          <Route exact path="/:domain/reseller/items/:itemId" component={ResellerItemsSinglePage} />
+          <Route
+            exact
+            path="/:domain/reseller/items"
+            component={ResellerItemsPage}
+          />
+          <Route
+            exact
+            path="/:domain/reseller/items/create"
+            component={CreateItemsPage}
+          />
+          <Route
+            exact
+            path="/:domain/reseller/items/single/:itemId"
+            component={ResellerItemsSinglePage}
+          />
 
           {/* Routes for consignor */}
 

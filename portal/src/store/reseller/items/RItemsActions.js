@@ -19,16 +19,23 @@ export const fetchItemsError = error => {
   };
 };
 
-export const createResellerItems = params => {
+export const clearResellerItems = () => {
   return {
-    type: "CREATE_RESELLER_ITEMS",
-    payload: { params }
+    type: "CLEAR_RESELLER_ITEMS"
   };
 };
 
-export const createItemsSuccess = () => {
+export const createResellerItems = (params, createAnother) => {
   return {
-    type: "CREATE_RESELLER_ITEMS_SUCCESS"
+    type: "CREATE_RESELLER_ITEMS",
+    payload: { params, createAnother }
+  };
+};
+
+export const createItemsSuccess = params => {
+  return {
+    type: "CREATE_RESELLER_ITEMS_SUCCESS",
+    payload: { params }
   };
 };
 

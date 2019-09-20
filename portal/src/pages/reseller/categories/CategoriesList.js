@@ -6,16 +6,30 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import CreateCategoriesRow from './CreateCategoriesRow';
+import CreateCategoriesRow from "./CreateCategoriesRow";
 import { Button } from "@material-ui/core";
-import { fetchResellerCategories, showResellerCategories, hideResellerCategories } from '../../../store/reseller/categories/RCategoriesActions';
+import {
+  fetchResellerCategories,
+  showResellerCategories,
+  hideResellerCategories,
+  selectResellerCategories
+} from "../../../store/reseller/categories/RCategoriesActions";
 import FormControl from "@material-ui/core/FormControl";
-import Checkbox from "@material-ui/core/Checkbox"
 import AttributesBadge from "./AttributesBadge";
+import CategoryCheckbox from "./CategoryCheckbox";
+import Searchbox from "../../../components/searchbox/Searchbox";
 
 class CategoriesList extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      searchFilter: ""
+    };
+  }
+
   componentDidMount() {
-    this.props.fetchResellerCategories();
+    this.props.fetchResellerCategories(this.state);
   }
 
   componentWillUnmount() {
@@ -23,11 +37,36 @@ class CategoriesList extends Component {
   }
 
   showAddRow = () => {
-    this.props.showResellerCategories()
-  }
+    this.props.showResellerCategories();
+  };
+
+  handleSelectedChange = params => {
+    this.props.selectResellerCategories(params);
+  };
+
+  handleSearch = value => {
+    this.setState(
+      {
+        searchFilter: value
+      },
+      () => this.fetch(this.state)
+    );
+  };
+
+  fetch = params => {
+    console.log("search", params);
+    this.props.fetchResellerCategories(params);
+  };
 
   render() {
-    const { categories, loading, show, hasError, error } = this.props;
+    const {
+      categories,
+      loading,
+      show,
+      hasError,
+      error,
+      selectList
+    } = this.props;
     return (
       <Section title="Categories">
         <Button
@@ -35,7 +74,12 @@ class CategoriesList extends Component {
           variant="outlined"
           className="section-button"
           onClick={() => this.showAddRow()}
-        >Create</Button>
+        >
+          Create
+        </Button>
+        <div className="search-box">
+          <Searchbox handleChange={this.handleSearch} />
+        </div>
         <Table>
           <TableHead className="table-head">
             <TableRow>
@@ -44,13 +88,16 @@ class CategoriesList extends Component {
               <TableCell>Section</TableCell>
               <TableCell>Category</TableCell>
               <TableCell>Attributes</TableCell>
-              <TableCell align='center'>Custom</TableCell>
+              <TableCell align="center">Custom</TableCell>
+              <TableCell></TableCell>
             </TableRow>
           </TableHead>
-          { loading || hasError ? <></> :
-          <TableBody>
-            {show ? <CreateCategoriesRow></CreateCategoriesRow> : null }
-            {categories.map(row => (
+          {loading || hasError ? (
+            <></>
+          ) : (
+            <TableBody>
+              {show ? <CreateCategoriesRow></CreateCategoriesRow> : null}
+              {categories.map(row => (
                 <TableRow key={row.id}>
                   <TableCell>
                     <FormControl
@@ -58,27 +105,38 @@ class CategoriesList extends Component {
                       variant="outlined"
                       error={false}
                     >
-                      <Checkbox
-                        id="selected"
-                        color="primary"
-                        checked={row.selected}
-                        onChange={this.handleSelectedChange}
-                        disabled={false}
-                      ></Checkbox>
+                      <CategoryCheckbox
+                        selected={row.selected}
+                        id={row.id}
+                        handleSelectedChange={this.handleSelectedChange}
+                        state={selectList.filter(s => s.id === row.id)[0] || {}}
+                      />
                     </FormControl>
                   </TableCell>
                   <TableCell>{row.department}</TableCell>
                   <TableCell>{row.section}</TableCell>
                   <TableCell>{row.category}</TableCell>
                   <TableCell>
-                    <AttributesBadge attributes={row.attributes}></AttributesBadge>
+                    <AttributesBadge
+                      attributes={row.attributes}
+                    ></AttributesBadge>
                   </TableCell>
-                  <TableCell align='center'>{row.custom.toString()}</TableCell>
+                  <TableCell align="center">{row.custom.toString()}</TableCell>
+                  <TableCell></TableCell>
                 </TableRow>
-            ))}
-          </TableBody> }
+              ))}
+            </TableBody>
+          )}
         </Table>
-        { loading || hasError || categories.length === 0 ? <Section loading={loading} hasError={hasError} error={error}></Section> : <></> }
+        {loading || hasError || categories.length === 0 ? (
+          <Section
+            loading={loading}
+            hasError={hasError}
+            error={error}
+          ></Section>
+        ) : (
+          <></>
+        )}
       </Section>
     );
   }
@@ -86,9 +144,12 @@ class CategoriesList extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchResellerCategories: () => dispatch(fetchResellerCategories()),
+    fetchResellerCategories: params =>
+      dispatch(fetchResellerCategories(params)),
     showResellerCategories: () => dispatch(showResellerCategories()),
     hideResellerCategories: () => dispatch(hideResellerCategories()),
+    selectResellerCategories: selected =>
+      dispatch(selectResellerCategories(selected))
   };
 };
 
@@ -97,7 +158,8 @@ const mapStateToProps = state => ({
   loading: state.rCategories.all.loading,
   hasError: state.rCategories.all.hasError,
   error: state.rCategories.all.error,
-  show: state.rCategories.create.show
+  show: state.rCategories.create.show,
+  selectList: state.rCategories.select
 });
 
 export default connect(

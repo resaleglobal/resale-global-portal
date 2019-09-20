@@ -41,12 +41,33 @@ export const createDepartmentsError = error => {
 
 export const showResellerDepartments = () => {
   return {
-    type: "SHOW_RESELLER_DEPARTMENTS",
+    type: "SHOW_RESELLER_DEPARTMENTS"
   };
 };
 
 export const hideResellerDepartments = () => {
   return {
-    type: "HIDE_RESELLER_DEPARTMENTS",
+    type: "HIDE_RESELLER_DEPARTMENTS"
+  };
+};
+
+export const selectResellerDepartments = params => {
+  return {
+    type: "SELECT_RESELLER_DEPARTMENTS",
+    payload: { params }
+  };
+};
+
+export const selectDepartmentsSuccess = params => {
+  return {
+    type: "SELECT_RESELLER_DEPARTMENTS_SUCCESS",
+    payload: { params }
+  };
+};
+
+export const selectDepartmentsError = (error, params) => {
+  return {
+    type: "SELECT_RESELLER_DEPARTMENTS_ERROR",
+    payload: { error, params }
   };
 };

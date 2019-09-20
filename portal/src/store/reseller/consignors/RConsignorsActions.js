@@ -1,6 +1,7 @@
-export const fetchResellerConsignors = () => {
+export const fetchResellerConsignors = params => {
   return {
-    type: "FETCH_RESELLER_CONSIGNORS"
+    type: "FETCH_RESELLER_CONSIGNORS",
+    payload: { params }
   };
 };
 
@@ -20,21 +21,20 @@ export const fetchConsignorsError = error => {
 
 export const showInviteConsignor = () => {
   return {
-    type: "SHOW_INVITE_CONSIGNOR",
+    type: "SHOW_INVITE_CONSIGNOR"
   };
 };
 
-
-export const submitInviteConsignor = (params) => {
+export const submitInviteConsignor = params => {
   return {
     type: "SUBMIT_INVITE_CONSIGNOR",
-    payload: {params}
+    payload: { params }
   };
 };
 
 export const submitInviteConsignorSuccess = () => {
   return {
-    type: "SUBMIT_INVITE_CONSIGNOR_SUCCESS",
+    type: "SUBMIT_INVITE_CONSIGNOR_SUCCESS"
   };
 };
 
@@ -44,4 +44,3 @@ export const submitInviteConsignorError = error => {
     payload: { error }
   };
 };
-

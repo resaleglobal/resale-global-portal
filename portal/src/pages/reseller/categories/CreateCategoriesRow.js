@@ -1,19 +1,22 @@
 import { Component } from "react";
 import React from "react";
 import { connect } from "react-redux";
-import { createResellerCategories } from "../../../store/reseller/categories/RCategoriesActions";
+import {
+  createResellerCategories,
+  hideResellerCategories
+} from "../../../store/reseller/categories/RCategoriesActions";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import "./Users.scss"
+import "./Users.scss";
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import InputLabel from "@material-ui/core/InputLabel";
 import Button from "@material-ui/core/Button";
 import FormControl from "@material-ui/core/FormControl";
-import Checkbox from "@material-ui/core/Checkbox"
+import Checkbox from "@material-ui/core/Checkbox";
 import DepartmentDropdown from "./DepartmentDropdown";
 import SectionDropdown from "./SectionDropdown";
-import AttributesDropdown from "./AttributesDropdown"
+import AttributesDropdown from "./AttributesDropdown";
 
 class CreateCategoriesRow extends Component {
   constructor(props) {
@@ -29,7 +32,7 @@ class CreateCategoriesRow extends Component {
       categoryError: false,
       sectionIdError: false,
       departmentIdError: false,
-      selectedError: false,
+      selectedError: false
     };
   }
 
@@ -39,13 +42,12 @@ class CreateCategoriesRow extends Component {
       categoryError: false,
       sectionIdError: false,
       departmentIdError: false,
-      selectedError: false,
+      selectedError: false
     });
 
     let pass = true;
 
     if (!this.state.category) {
-      
       this.setState({
         categoryError: true
       });
@@ -54,7 +56,6 @@ class CreateCategoriesRow extends Component {
     }
 
     if (!this.state.sectionId) {
-      
       this.setState({
         sectionIdError: true
       });
@@ -63,7 +64,6 @@ class CreateCategoriesRow extends Component {
     }
 
     if (!this.state.departmentId) {
-      
       this.setState({
         departmentIdError: true
       });
@@ -77,7 +77,7 @@ class CreateCategoriesRow extends Component {
         category: this.state.category,
         sectionId: this.state.sectionId,
         departmentId: this.state.departmentId,
-        selected: this.state.selected,
+        selected: this.state.selected
       });
     }
   };
@@ -100,35 +100,42 @@ class CreateCategoriesRow extends Component {
   callBackDepartmentSelectedDropdown = selected => {
     this.setState({
       departmentId: selected
-    })
-  }
+    });
+  };
 
   callBackSectionSelectedDropdown = selected => {
     this.setState({
       sectionId: selected
-    })
-  }
+    });
+  };
 
   callBackAttributesSelectedDropdown = attributes => {
-    console.log('attributes', attributes)
     this.setState({
       attributes
-    })
-  }
+    });
+  };
+
+  handleCancel = () => {
+    this.props.hideResellerCategories();
+  };
 
   render() {
-
     const { loading } = this.props;
-    const { category, sectionId, departmentId, selected, categoryError, sectionError, departmentError, selectedError,} = this.state
+    const {
+      category,
+      sectionId,
+      departmentId,
+      selected,
+      categoryError,
+      sectionError,
+      departmentError,
+      selectedError
+    } = this.state;
 
     return (
       <TableRow key="add-row">
         <TableCell>
-          <FormControl
-            required={true}
-            variant="outlined"
-            error={selectedError}
-          >
+          <FormControl required={true} variant="outlined" error={selectedError}>
             <Checkbox
               id="selected"
               color="primary"
@@ -139,10 +146,15 @@ class CreateCategoriesRow extends Component {
           </FormControl>
         </TableCell>
         <TableCell>
-          <DepartmentDropdown callBackSelectedDropdown={this.callBackDepartmentSelectedDropdown}></DepartmentDropdown>
+          <DepartmentDropdown
+            callBackSelectedDropdown={this.callBackDepartmentSelectedDropdown}
+          ></DepartmentDropdown>
         </TableCell>
         <TableCell>
-          <SectionDropdown callBackSelectedDropdown={this.callBackSectionSelectedDropdown} departmentId={departmentId}></SectionDropdown>
+          <SectionDropdown
+            callBackSelectedDropdown={this.callBackSectionSelectedDropdown}
+            departmentId={departmentId}
+          ></SectionDropdown>
         </TableCell>
         <TableCell>
           <FormControl
@@ -163,20 +175,28 @@ class CreateCategoriesRow extends Component {
           </FormControl>
         </TableCell>
         <TableCell>
-          <AttributesDropdown attributesCallback={this.callBackAttributesSelectedDropdown}></AttributesDropdown>
+          <AttributesDropdown
+            attributesCallback={this.callBackAttributesSelectedDropdown}
+          ></AttributesDropdown>
         </TableCell>
-        <TableCell>
+        <TableCell align="center">
           <Button
             color="primary"
             variant="outlined"
             onClick={this.handleSubmit}
             disabled={loading}
-            >
-              {loading ? (
-                <CircularProgress className="login-loader" />
-              ) : (
-                "Submit"
-              )}</Button>
+          >
+            {loading ? <CircularProgress className="login-loader" /> : "Submit"}
+          </Button>
+        </TableCell>
+        <TableCell>
+          <Button
+            color="secondary"
+            variant="outlined"
+            onClick={this.handleCancel}
+          >
+            Cancel
+          </Button>
         </TableCell>
       </TableRow>
     );
@@ -185,14 +205,16 @@ class CreateCategoriesRow extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    createResellerCategories: params => dispatch(createResellerCategories(params)),
+    createResellerCategories: params =>
+      dispatch(createResellerCategories(params)),
+    hideResellerCategories: () => dispatch(hideResellerCategories())
   };
 };
 
 const mapStateToProps = state => ({
   loading: state.adminUsers.invite.loading,
   hasError: state.adminUsers.invite.error,
-  error: state.adminUsers.invite.errorMessage,
+  error: state.adminUsers.invite.errorMessage
 });
 
 export default connect(

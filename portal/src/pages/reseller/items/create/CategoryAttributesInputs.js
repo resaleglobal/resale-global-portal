@@ -91,7 +91,6 @@ class CategoryAttributesInputs extends Component {
               <OutlinedInput
                 id={attribute.id.toString()}
                 labelWidth={width}
-                autoFocus={true}
                 type="title"
                 onChange={this.handleChange(attribute.id)}
               ></OutlinedInput>

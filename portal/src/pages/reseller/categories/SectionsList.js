@@ -6,9 +6,14 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import CreateSectionsRow from './CreateSectionsRow';
+import CreateSectionsRow from "./CreateSectionsRow";
+import CategoryCheckbox from "./CategoryCheckbox";
 import { Button } from "@material-ui/core";
-import { fetchResellerSections, showResellerSections } from '../../../store/reseller/sections/RSectionsActions';
+import {
+  fetchResellerSections,
+  showResellerSections,
+  selectResellerSections
+} from "../../../store/reseller/sections/RSectionsActions";
 
 class SectionsList extends Component {
   componentDidMount() {
@@ -16,11 +21,15 @@ class SectionsList extends Component {
   }
 
   showAddRow = () => {
-    this.props.showResellerSections()
-  }
+    this.props.showResellerSections();
+  };
+
+  handleSelectedChange = params => {
+    this.props.selectResellerSections(params);
+  };
 
   render() {
-    const { sections, loading, show, hasError, error } = this.props;
+    const { sections, loading, show, hasError, error, selectList } = this.props;
     return (
       <Section title="Sections">
         <Button
@@ -28,7 +37,9 @@ class SectionsList extends Component {
           variant="outlined"
           className="section-button"
           onClick={() => this.showAddRow()}
-        >Create</Button>
+        >
+          Create
+        </Button>
         <Table>
           <TableHead className="table-head">
             <TableRow>
@@ -39,21 +50,41 @@ class SectionsList extends Component {
               <TableCell></TableCell>
             </TableRow>
           </TableHead>
-          { loading || hasError ? <></> :
-          <TableBody>
-            {show ? <CreateSectionsRow></CreateSectionsRow> : null }
-            {sections.map(row => (
+          {loading || hasError ? (
+            <></>
+          ) : (
+            <TableBody>
+              {show ? <CreateSectionsRow></CreateSectionsRow> : null}
+              {sections.map(row => (
                 <TableRow key={row.id}>
-                  <TableCell></TableCell>
+                  <TableCell>
+                    <CategoryCheckbox
+                      selected={row.selected}
+                      id={row.id}
+                      handleSelectedChange={this.handleSelectedChange}
+                      state={selectList.filter(s => s.id === row.id)[0] || {}}
+                    />
+                  </TableCell>
                   <TableCell>{row.department}</TableCell>
                   <TableCell>{row.section}</TableCell>
-                  <TableCell>{row.custom ? row.custom.toString() : null}</TableCell>
+                  <TableCell>
+                    {row.custom ? row.custom.toString() : null}
+                  </TableCell>
                   <TableCell></TableCell>
                 </TableRow>
-            ))}
-          </TableBody> }
+              ))}
+            </TableBody>
+          )}
         </Table>
-        { loading || hasError || sections.length === 0 ? <Section loading={loading} hasError={hasError} error={error}></Section> : <></> }
+        {loading || hasError || sections.length === 0 ? (
+          <Section
+            loading={loading}
+            hasError={hasError}
+            error={error}
+          ></Section>
+        ) : (
+          <></>
+        )}
       </Section>
     );
   }
@@ -63,6 +94,7 @@ const mapDispatchToProps = dispatch => {
   return {
     fetchResellerSections: () => dispatch(fetchResellerSections()),
     showResellerSections: () => dispatch(showResellerSections()),
+    selectResellerSections: params => dispatch(selectResellerSections(params))
   };
 };
 
@@ -71,7 +103,8 @@ const mapStateToProps = state => ({
   loading: state.rSections.all.loading,
   hasError: state.rSections.all.hasError,
   error: state.rSections.all.error,
-  show: state.rSections.create.show
+  show: state.rSections.create.show,
+  selectList: state.rSections.select
 });
 
 export default connect(

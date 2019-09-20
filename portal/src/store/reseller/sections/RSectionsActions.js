@@ -21,7 +21,7 @@ export const fetchSectionsError = error => {
 
 export const clearResellerDropdownSections = () => {
   return {
-    type: "CLEAR_RESELLER_DROPDOWN_SECTIONS",
+    type: "CLEAR_RESELLER_DROPDOWN_SECTIONS"
   };
 };
 
@@ -68,12 +68,33 @@ export const createSectionsError = error => {
 
 export const showResellerSections = () => {
   return {
-    type: "SHOW_RESELLER_SECTIONS",
+    type: "SHOW_RESELLER_SECTIONS"
   };
 };
 
 export const hideResellerSections = () => {
   return {
-    type: "HIDE_RESELLER_SECTIONS",
+    type: "HIDE_RESELLER_SECTIONS"
+  };
+};
+
+export const selectResellerSections = params => {
+  return {
+    type: "SELECT_RESELLER_SECTIONS",
+    payload: { params }
+  };
+};
+
+export const selectSectionsSuccess = params => {
+  return {
+    type: "SELECT_RESELLER_SECTIONS_SUCCESS",
+    payload: { params }
+  };
+};
+
+export const selectSectionsError = (error, params) => {
+  return {
+    type: "SELECT_RESELLER_SECTIONS_ERROR",
+    payload: { error, params }
   };
 };

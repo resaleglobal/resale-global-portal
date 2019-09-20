@@ -3,7 +3,20 @@ import { select } from "redux-saga/effects";
 
 import { get, post } from "../../../utils/RestUtils";
 import { accountId } from "./RSectionsSelectors";
-import { fetchSectionsSuccess, fetchSectionsError, fetchDropdownSectionsSuccess, fetchDropdownSectionsError, createSectionsSuccess, createSectionsError } from "./RSectionsActions";
+import {
+  fetchSectionsSuccess,
+  fetchSectionsError,
+  fetchDropdownSectionsSuccess,
+  fetchDropdownSectionsError,
+  createSectionsSuccess,
+  createSectionsError,
+  selectSectionsSuccess,
+  selectSectionsError
+} from "./RSectionsActions";
+import {
+  selectResellerCategories,
+  fetchResellerCategories
+} from "../categories/RCategoriesActions";
 
 function fetchSections(params) {
   return get(`/reseller/v1/${params.accountId}/sections`).then(response => {
@@ -14,7 +27,7 @@ function fetchSections(params) {
 function* fetchResellerSections(action) {
   try {
     const id = yield select(accountId);
-    const params = {accountId: id}
+    const params = { accountId: id };
     const data = yield call(fetchSections, params);
     yield put(fetchSectionsSuccess(data));
   } catch (e) {
@@ -28,20 +41,21 @@ function* fetchResellerSectionsSaga() {
 }
 
 function fetchDropdownSections(params) {
-  let paramString = ""
+  let paramString = "";
   if (params.departmentId) {
-    paramString = `?departmentId=${params.departmentId}`
+    paramString = `?departmentId=${params.departmentId}`;
   }
-  return get(`/reseller/v1/${params.accountId}/sections${paramString}`).then(response => {
-    return response.json();
-  });
+  return get(`/reseller/v1/${params.accountId}/sections${paramString}`).then(
+    response => {
+      return response.json();
+    }
+  );
 }
 
 function* fetchResellerDropdownSections(action) {
   try {
-    console.log(action.payload)
     const id = yield select(accountId);
-    const params = {...action.payload.params, accountId: id}
+    const params = { ...action.payload.params, accountId: id };
     const data = yield call(fetchDropdownSections, params);
     yield put(fetchDropdownSectionsSuccess(data));
   } catch (e) {
@@ -50,19 +64,24 @@ function* fetchResellerDropdownSections(action) {
 }
 
 function* fetchResellerDropdownSectionsnSaga() {
-  yield takeLatest("FETCH_RESELLER_DROPDOWN_SECTIONS", fetchResellerDropdownSections);
+  yield takeLatest(
+    "FETCH_RESELLER_DROPDOWN_SECTIONS",
+    fetchResellerDropdownSections
+  );
 }
 
 function createSections(params) {
-  return post(`/reseller/v1/${params.accountId}/sections`, params).then(response => {
-    return response
-  });
+  return post(`/reseller/v1/${params.accountId}/sections`, params).then(
+    response => {
+      return response;
+    }
+  );
 }
 
 function* createResellerSections(action) {
   try {
     const id = yield select(accountId);
-    const params = {...action.payload.params, accountId: id}
+    const params = { ...action.payload.params, accountId: id };
     yield call(createSections, params);
     yield put(createSectionsSuccess());
   } catch (e) {
@@ -74,10 +93,31 @@ function* createResellerSectionsSaga() {
   yield takeLatest("CREATE_RESELLER_SECTIONS", createResellerSections);
 }
 
+function selectSections(params) {
+  return post(`/reseller/v1/${params.accountId}/sections/select`, params);
+}
+
+function* selectResellerSections(action) {
+  try {
+    const id = yield select(accountId);
+    const params = { ...action.payload.params, accountId: id };
+    yield call(selectSections, params);
+    yield put(selectSectionsSuccess(params));
+    yield put(fetchResellerCategories());
+  } catch (e) {
+    yield put(selectSectionsError(e.message, action.payload.params));
+  }
+}
+
+function* selectResellerSectionsSaga() {
+  yield takeLatest("SELECT_RESELLER_SECTIONS", selectResellerSections);
+}
+
 export default function* rootResellerSectionsSaga() {
   yield all([
     fetchResellerSectionsSaga(),
     createResellerSectionsSaga(),
-    fetchResellerDropdownSectionsnSaga()
-  ])
+    fetchResellerDropdownSectionsnSaga(),
+    selectResellerSectionsSaga()
+  ]);
 }

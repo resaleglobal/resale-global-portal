@@ -30,17 +30,15 @@
 }
 
 a.MuiTableRow-root {
-
   &:nth-child(even) {
     background-color: #f4f4f4;
   }
 
   &:hover {
-    background-color:#edeffa;
-    cursor:pointer;
+    background-color: #edeffa;
+    cursor: pointer;
   }
 }
-
 
 td {
   &.table-profile {
@@ -124,16 +122,36 @@ td {
   }
 }
 
-button.section-button, a.section-button {
+button.section-button,
+a.section-button {
   margin-bottom: 20px;
-
 }
-
 
 // Dropzone
 
 .DropzoneArea-dropzoneParagraph-199 {
   font-size: 24px;
-  color:#6a6a6a;
+  color: #6a6a6a;
   font-weight: 300;
+}
+
+.search-box {
+  margin-bottom: 20px;
+  width: 25%;
+}
+
+.info-section {
+  display: flex;
+  flex-direction: row;
+  max-width: 100%;
+
+  .single-item-carousel {
+    width: 30%;
+    min-width: 30%;
+    margin-right: 10px;
+    border: 1px solid gray;
+  }
+  .single-item-table {
+    width: 100%;
+  }
 }
