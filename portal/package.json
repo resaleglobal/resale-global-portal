@@ -7,7 +7,7 @@
     "@material-ui/icons": "^4.1.0",
     "awesome-debounce-promise": "^2.1.0",
     "material-ui-dropzone": "^2.4.0",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "query-string": "^6.7.0",
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
